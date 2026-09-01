@@ -125,8 +125,10 @@ body.bg-rain{--bg-opacity:1;--faint:#7e7b75}
 body.bg-rain #veil{
   background:linear-gradient(rgba(6,7,12,.58),rgba(6,7,12,.86));
 }
-/* The glitch loop blows out to white, so it needs holding back further. */
-body.bg-error #veil{
+/* The glitch loop and the ice-blue installation both blow out to white,
+   so they need holding back further. */
+body.bg-error #veil,
+body.bg-deconstruction #veil{
   background:linear-gradient(rgba(6,7,12,.74),rgba(6,7,12,.90));
 }
 
@@ -141,7 +143,12 @@ body.bg-error .meta,
 body.bg-error .prose,
 body.bg-error .section-label,
 body.bg-error .next,
-body.bg-error .foot{text-shadow:0 1px 3px rgba(0,0,0,.85)}
+body.bg-error .foot,
+body.bg-deconstruction .meta,
+body.bg-deconstruction .prose,
+body.bg-deconstruction .section-label,
+body.bg-deconstruction .next,
+body.bg-deconstruction .foot{text-shadow:0 1px 3px rgba(0,0,0,.85)}
 
 main{position:relative;z-index:2}
 

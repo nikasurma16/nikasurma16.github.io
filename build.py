@@ -406,7 +406,7 @@ WORKS = [
  "sub_en": "Graduation work, Soundartist.ru. Krasnokholmskaya Gallery, Moscow, 22.07 — 07.09.2025.",
  "sub_ru": "Дипломная работа, Soundartist.ru. Краснохолмская галерея, Москва, 22.07 — 07.09.2025.",
  "cover": "deconstruction.jpg", "fit": "cover",
- "cover_video": "whispers", "flip": True,
+ "cover_video": "whispers", "flip": True, "bg": "deconstruction",
  "meta": [
    ("Year", "Год", "2025", "2025"),
    ("Form", "Форма",
@@ -506,6 +506,8 @@ WORKS = [
 
 
 CV = [
+ ("2026", '<b><a href="https://www.sikoraarts.com/solo-exhibition-1" rel="noopener">Working Title — Objects and Voices</a></b> — online exhibition, SikoraArts Gallery, Cortland, NY, 1.09 — 24.10.2026',
+          '<b><a href="https://www.sikoraarts.com/solo-exhibition-1" rel="noopener">Working Title — Objects and Voices</a></b> — онлайн-выставка, галерея SikoraArts, Кортланд, Нью-Йорк, 1.09 — 24.10.2026'),
  ("2026", "<b>City 15741</b> — winner, «City of the Future» dome projection competition, ДЕЛЬТА’n; screening at Planetarium No. 1, St. Petersburg",
           "<b>Город 15741</b> — победитель конкурса купольных проекций «Город будущего», ДЕЛЬТА’n; показ в Планетарии №1, Санкт-Петербург"),
  ("2026", "<b>The Cage of DOME</b> — Glitching Environments, group exhibition, AIR, ITMO",
