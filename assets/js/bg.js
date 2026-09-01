@@ -21,6 +21,17 @@
   var reduced = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* On a phone the stylesheet shows #bgstill instead: never touch the video,
+     or iOS lays its own transport controls over the page. */
+  var still = window.matchMedia && window.matchMedia('(max-width: 760px)').matches;
+  if (still) {
+    video.removeAttribute('autoplay');
+    video.preload = 'none';
+    while (video.firstChild) video.removeChild(video.firstChild);
+    video.load();
+    return;
+  }
+
   if (reduced) {
     video.removeAttribute('autoplay');
     video.pause();

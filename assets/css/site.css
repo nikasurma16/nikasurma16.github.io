@@ -54,6 +54,27 @@ a{color:inherit;text-decoration:none}
 #bg{display:none}
 #bg.on{display:block}
 
+/* Phones refuse to autoplay a background loop — iOS puts its own player over
+   the page instead — so there the still stands in and a link offers the
+   video to anyone who wants it. */
+#bgstill{
+  position:fixed;inset:0;z-index:0;display:none;
+  background:#07080e no-repeat center/cover;
+  opacity:var(--bg-opacity,1);
+}
+.bg-watch{
+  display:none;
+  position:fixed;right:var(--pad);bottom:16px;z-index:61;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--dim);
+  border-bottom:1px solid var(--line);padding-bottom:3px;
+}
+@media (max-width:760px),(prefers-reduced-motion:reduce){
+  #bgstill{display:block}
+  #bgv,#bg{display:none !important}
+  .bg-watch{display:inline-block}
+}
+
 body:not(.deck-page){--bg-opacity:.92}
 
 #veil{
@@ -70,7 +91,8 @@ body:not(.deck-page) #veil{
 
 body.splash-page{overflow:hidden;--bg-opacity:1}
 body.splash-page #bgv,
-body.splash-page #bg{transform:scale(1.42);transform-origin:52% 46%}
+body.splash-page #bg,
+body.splash-page #bgstill{transform:scale(1.42);transform-origin:52% 46%}
 body.splash-page #veil{background:rgba(8,8,10,.56)}
 
 .splash{

@@ -40,6 +40,22 @@
 
   var inlineVideos = document.querySelectorAll('.cut video');
 
+  /* Phones will not autoplay these either, and iOS answers with its own
+     transport controls laid over the page. Swap in the poster frame — the
+     cut-out keeps its shape and the link around it still works. */
+  if (window.matchMedia && window.matchMedia('(max-width: 760px)').matches) {
+    Array.prototype.forEach.call(inlineVideos, function (v) {
+      var poster = v.getAttribute('poster');
+      if (!poster) return;
+      var img = document.createElement('img');
+      img.src = poster;
+      img.alt = '';
+      img.decoding = 'async';
+      v.parentNode.replaceChild(img, v);
+    });
+    inlineVideos = [];
+  }
+
   function nudge() {
     Array.prototype.forEach.call(inlineVideos, function (v) {
       if (!v.paused) return;
