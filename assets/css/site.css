@@ -72,13 +72,23 @@ body.bg-rain{--bg-opacity:1;--faint:#7e7b75}
 body.bg-rain #veil{
   background:linear-gradient(rgba(6,7,12,.58),rgba(6,7,12,.86));
 }
-/* Small type has to survive passing over the bright parts of the projection. */
+/* The glitch loop blows out to white, so it needs holding back further. */
+body.bg-error #veil{
+  background:linear-gradient(rgba(6,7,12,.74),rgba(6,7,12,.90));
+}
+
+/* Small type has to survive passing over the bright parts of a projection. */
 body.bg-rain .meta,
 body.bg-rain .prose,
 body.bg-rain .section-label,
 body.bg-rain .grid figcaption,
 body.bg-rain .next,
-body.bg-rain .foot{text-shadow:0 1px 3px rgba(0,0,0,.85)}
+body.bg-rain .foot,
+body.bg-error .meta,
+body.bg-error .prose,
+body.bg-error .section-label,
+body.bg-error .next,
+body.bg-error .foot{text-shadow:0 1px 3px rgba(0,0,0,.85)}
 
 main{position:relative;z-index:2}
 
@@ -192,6 +202,8 @@ body.deck-page{overflow:hidden}
 /* Every photograph is monochrome, so the collage reads as one cut-out world. */
 .cut img{display:block;filter:grayscale(1) contrast(1.06)}
 .cut[data-fit="contain"]{background:none;padding:0;clip-path:none}
+/* Pinned up the wrong way round, on purpose. */
+.cut[data-flip="1"] img{transform:rotate(180deg)}
 
 .cut[data-shape="1"]{clip-path:polygon(0.0% 1.4%,20.0% 0.2%,40.0% 1.4%,60.0% 3.1%,80.0% 2.6%,100.0% 1.3%,98.3% 20.0%,98.6% 40.0%,98.1% 60.0%,98.1% 80.0%,97.4% 100.0%,80.0% 96.9%,60.0% 99.8%,40.0% 98.7%,20.0% 99.7%,0.0% 97.2%,2.4% 80.0%,1.9% 60.0%,3.2% 40.0%,2.4% 20.0%)}
 .cut[data-shape="2"]{clip-path:polygon(0.0% 0.4%,20.0% 1.7%,40.0% 1.7%,60.0% 2.9%,80.0% 0.3%,100.0% 0.8%,98.0% 20.0%,98.1% 40.0%,97.3% 60.0%,98.1% 80.0%,97.5% 100.0%,80.0% 97.4%,60.0% 97.4%,40.0% 98.0%,20.0% 99.2%,0.0% 97.9%,0.4% 80.0%,2.8% 60.0%,1.5% 40.0%,2.8% 20.0%)}

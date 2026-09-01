@@ -48,14 +48,15 @@ def t(en, ru, tag="span", cls=None):
 TILTS = [-3.4, 2.6, -1.9, 3.9, -2.8, 1.7, -4.2, 2.2, -1.4, 3.1, -2.6, 1.2]
 
 
-def cut(i, src, prefix, fit="cover", eager=False, klass=""):
-    """One scissor-cut photograph."""
-    return ('<div class="cut{k}" data-fit="{fit}" data-shape="{shape}" '
+def cut(i, src, prefix, fit="cover", eager=False, klass="", flip=False):
+    """One scissor-cut photograph. `flip` hangs it upside down."""
+    return ('<div class="cut{k}" data-fit="{fit}" data-shape="{shape}"{flip} '
             'style="--tilt:{tilt}deg;--d:{delay}ms">'
             '<img src="{p}assets/img/{src}" alt=""{load} decoding="async">'
             '</div>').format(
         k=(" " + klass) if klass else "",
         fit=fit, shape=(i % 5) + 1, tilt=TILTS[i % len(TILTS)],
+        flip=' data-flip="1"' if flip else "",
         delay=(i % 6) * 70, p=prefix, src=src,
         load=' fetchpriority="high"' if eager else ' loading="lazy"')
 
@@ -277,7 +278,7 @@ WORKS = [
  "title_en": "Magic Lantern", "title_ru": "Волшебный фонарь",
  "sub_en": "Night of Light, Gatchina, 2025. Media art and sound design; music and animation.",
  "sub_ru": "«Ночь света», Гатчина, 2025. Медиахудожница и саунд-дизайн; музыка и анимация.",
- "cover": "lantern-credits.jpg", "fit": "contain", "bg": "lantern",
+ "cover": "lantern-credits.jpg", "fit": "contain", "bg": "lantern", "flip": True,
  "meta": [
    ("Year", "Год", "2025", "2025"),
    ("Festival", "Фестиваль",
@@ -380,7 +381,7 @@ WORKS = [
            "The story of the most adorable oak-like error in the network.",
  "sub_ru": "Отобран в спец-проект ПС-2025 «Все прекрасные аудиовизуальные истории». "
            "История самой обаятельной дубоподобной ошибки в сети.",
- "cover": "error-01.jpg", "fit": "cover",
+ "cover": "ps2025-poster.jpg", "fit": "cover", "bg": "error",
  "meta": [
    ("Year", "Год", "2025", "2025"),
    ("Programme", "Программа",
@@ -411,9 +412,7 @@ WORKS = [
    "MAX/MSP, создавая многослойное поле, где разрыв, смещение и прерывание работают "
    "как новые формы смыслообразования.",
  ],
- "gallery": [
-   ("error-poster.jpg", "cover", "Prepared Environments 2025", "«Подготовленные среды 2025»"),
- ],
+ "gallery": [],
 },
 {
  "slug": "deconstruction-of-ai",
@@ -596,7 +595,8 @@ def render_index():
     <a class="hit" href="work/{slug}.html" aria-label="{title_en}"></a>
   </section>""".format(
             fit=w["fit"], n=i + 1, slug=w["slug"], title_en=w["title_en"],
-            cutout=cut(i, w["cover"], "", w["fit"], eager=(i == 0)),
+            cutout=cut(i, w["cover"], "", w["fit"], eager=(i == 0),
+                       flip=w.get("flip", False)),
             kicker=t(w["kicker_en"], w["kicker_ru"]),
             title=t(w["title_en"], w["title_ru"]),
             sub=t(w["sub_en"], w["sub_ru"]),
@@ -687,7 +687,8 @@ def render_work(i, w):
 </body>
 </html>
 """.format(fit=w["fit"],
-           cutout=cut(i, w.get("hero", w["cover"]), "../", w["fit"], eager=True),
+           cutout=cut(i, w.get("hero", w["cover"]), "../", w["fit"], eager=True,
+                      flip=w.get("flip", False)),
            kicker=t(w["kicker_en"], w["kicker_ru"]),
            title=t(w["title_en"], w["title_ru"]),
            sub=t(w["sub_en"], w["sub_ru"]),
