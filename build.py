@@ -206,6 +206,7 @@ WORKS = [
  "sub_ru": "Победитель конкурса купольных проекций «Город будущего» фестиваля ДЕЛЬТА’n. "
            "Город, который поддерживается в порядке ни для кого. С Майком Ивом и Павлом Гордеевым.",
  "cover": "city-04.webp", "fit": "contain",
+ "hero": "delta-poster.jpg", "hero_fit": "cover",
  "meta": [
    ("Year", "Год", "2026", "2026"),
    ("Award", "Награда",
@@ -241,9 +242,6 @@ WORKS = [
  ],
  "gallery": [
    ("city-01.webp", "contain", "Act I — Threshold", "Акт I — Порог"),
-   ("delta-poster.jpg", "cover",
-    "ДЕЛЬТА’n — dome projection competition final, Planetarium No. 1",
-    "ДЕЛЬТА’n — финал конкурса купольных проекций, Планетарий №1"),
    ("city-02.webp", "contain", "Act I — Threshold", "Акт I — Порог"),
    ("city-03.webp", "contain", "Act II — Repeat", "Акт II — Повтор"),
    ("city-05.webp", "contain", "Act II — Repeat", "Акт II — Повтор"),
@@ -349,7 +347,6 @@ WORKS = [
    "и рассказать о себе.",
  ],
  "gallery": [
-   ("lantern-credits.jpg", "cover", "Credits sheet", "Лист с титрами", True),
  ],
 },
 {
@@ -448,7 +445,7 @@ WORKS = [
  "sub_en": "Graduation work, Soundartist.ru. Krasnokholmskaya Gallery, Moscow, 22.07 — 07.09.2025.",
  "sub_ru": "Дипломная работа, Soundartist.ru. Краснохолмская галерея, Москва, 22.07 — 07.09.2025.",
  "cover": "deconstruction.jpg", "fit": "cover",
- "cover_video": "whispers", "flip": True, "bg": "deconstruction",
+ "cover_video": "whispers", "bg": "deconstruction",
  "meta": [
    ("Year", "Год", "2025", "2025"),
    ("Form", "Форма",
@@ -489,6 +486,7 @@ WORKS = [
  "sub_ru": "Лаборатория экспериментального звука, Дом радио. Модулярный синтез, "
            "полевые записи, акустическая экспериментальная композиция.",
  "cover": "lez-hall.jpg", "fit": "cover",
+ "hero": "lez-poster.jpg", "hero_fit": "cover",
  "meta": [
    ("Year", "Год", "2025", "2025"),
    ("Institution", "Площадка", "Dom Radio, St. Petersburg", "Дом радио, Санкт-Петербург"),
@@ -513,7 +511,6 @@ WORKS = [
  ],
  "gallery": [
    ("lez-synth.jpg", "cover", "Modular synthesis lab", "Лаборатория модулярного синтеза"),
-   ("lez-poster.jpg", "cover", "Acoustic Trace, 1.10 — 21.12.2025", "«Акустический след», 1.10 — 21.12.2025"),
  ],
 },
 {
@@ -710,7 +707,7 @@ def render_work(i, w):
             "{BODY_CLASS}", ' class="bg-%s"' % w.get("bg", "portrait"))
     html += header("../", "work")
     html += """<main>
-<section class="hero" data-fit="{fit}">
+<section class="hero" data-fit="{herofit}">
   <div class="cap">
     <p class="kicker">{kicker}</p>
     <h1>{title}</h1>
@@ -741,8 +738,9 @@ def render_work(i, w):
 <script src="../{sitejs}" defer></script>
 </body>
 </html>
-""".format(fit=w["fit"],
-           cutout=cut(i, w.get("hero", w["cover"]), "../", w["fit"], eager=True,
+""".format(herofit=w.get("hero_fit", w["fit"]),
+           cutout=cut(i, w.get("hero", w["cover"]), "../",
+                      w.get("hero_fit", w["fit"]), eager=True,
                       flip=w.get("flip", False),
                       video=w.get("cover_video")),
            kicker=t(w["kicker_en"], w["kicker_ru"]),
