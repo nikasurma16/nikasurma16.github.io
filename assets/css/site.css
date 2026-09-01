@@ -83,6 +83,7 @@ body.splash-page #veil{background:rgba(8,8,10,.56)}
 }
 .splash-name{
   margin:0;
+  font-family:var(--display,var(--sans));
   font-weight:200;font-size:clamp(34px,7vw,96px);line-height:1;
   letter-spacing:.02em;text-transform:uppercase;
   text-shadow:0 2px 26px rgba(0,0,0,.6);
@@ -99,6 +100,7 @@ body.splash-page #veil{background:rgba(8,8,10,.56)}
   margin-top:clamp(20px,4vh,48px);
 }
 .splash-doors a{
+  font-family:var(--display,var(--sans));
   font-size:clamp(13px,1.5vw,17px);font-weight:300;
   text-shadow:0 1px 12px rgba(0,0,0,.75);
   letter-spacing:.24em;text-transform:uppercase;
@@ -174,6 +176,7 @@ html[lang="ru"] [data-t="ru"]{display:revert}
 .hdr > *{pointer-events:auto}
 
 .mark{
+  font-family:var(--display,var(--sans));
   font-size:11px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;
   white-space:nowrap;
 }
@@ -230,6 +233,7 @@ body.deck-page{overflow:hidden}
 }
 .slide h2{
   margin:.5em 0 .42em;
+  font-family:var(--display,var(--sans));
   font-weight:200;font-size:clamp(31px,5.6vw,78px);line-height:1.02;
   letter-spacing:.004em;text-transform:uppercase;
 }
@@ -348,7 +352,8 @@ html.js .portrait:hover .cut.in{
 }
 .hero .cut video{width:min(40vw,520px)}
 .hero h1{
-  margin:.5em 0 .34em;font-weight:200;font-size:clamp(28px,5vw,66px);line-height:1.04;
+  margin:.5em 0 .34em;
+  font-family:var(--display,var(--sans));font-weight:200;font-size:clamp(28px,5vw,66px);line-height:1.04;
   letter-spacing:.004em;text-transform:uppercase;
 }
 .hero .sub{margin:0;max-width:52ch;font-size:13px;color:#cbc8c2}
@@ -410,7 +415,7 @@ html.js .portrait:hover .cut.in{
   padding:clamp(30px,5vw,58px) 0;border-top:1px solid var(--line);
 }
 .next .lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint)}
-.next .ttl{font-size:clamp(20px,3vw,34px);font-weight:200;text-transform:uppercase;letter-spacing:.01em}
+.next .ttl{font-family:var(--display,var(--sans));font-size:clamp(20px,3vw,34px);font-weight:200;text-transform:uppercase;letter-spacing:.01em}
 .next a:hover .ttl{color:#fff}
 
 .foot{
@@ -425,7 +430,8 @@ html.js .portrait:hover .cut.in{
 
 .about-top{padding:calc(var(--hdr) + clamp(50px,10vh,120px)) 0 0}
 .about-top h1{
-  margin:0 0 .5em;font-weight:200;font-size:clamp(30px,5.4vw,70px);line-height:1.05;
+  margin:0 0 .5em;
+  font-family:var(--display,var(--sans));font-weight:200;font-size:clamp(30px,5.4vw,70px);line-height:1.05;
   text-transform:uppercase;letter-spacing:.004em;
 }
 .portrait{padding-top:6px}
