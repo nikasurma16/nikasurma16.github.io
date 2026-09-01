@@ -30,7 +30,7 @@ def t(en, ru, tag="span", cls=None):
             .format(tag, c, en, ru))
 
 
-def head(title, desc, prefix, og_image):
+def head(title, desc, prefix, og_image, bg="smoke"):
     return """<!doctype html>
 <html lang="en">
 <head>
@@ -52,13 +52,13 @@ def head(title, desc, prefix, og_image):
 </head>
 <body{body_class}>
 <video id="bgv" aria-hidden="true" tabindex="-1" autoplay muted loop playsinline
-       preload="auto" poster="{p}assets/video/smoke-poster.jpg">
-  <source src="{p}assets/video/smoke.webm" type="video/webm">
-  <source src="{p}assets/video/smoke.mp4" type="video/mp4">
+       preload="auto" poster="{p}assets/video/{bg}-poster.jpg">
+  <source src="{p}assets/video/{bg}.webm" type="video/webm">
+  <source src="{p}assets/video/{bg}.mp4" type="video/mp4">
 </video>
 <canvas id="bg" aria-hidden="true"></canvas>
 <div id="veil" aria-hidden="true"></div>
-""".format(title=title, desc=desc, p=prefix, site=SITE_URL, og=og_image,
+""".format(title=title, desc=desc, p=prefix, site=SITE_URL, og=og_image, bg=bg,
            body_class="{BODY_CLASS}")
 
 
@@ -721,7 +721,8 @@ def render_about():
 
     html = head("About — %s" % NAME,
                 re.sub("<[^>]+>", "", BIO_EN[0]),
-                "", "portrait.jpg").replace("{BODY_CLASS}", "")
+                "", "portrait.jpg",
+                bg="portrait").replace("{BODY_CLASS}", ' class="about-page"')
     html += header("", "about")
     html += """<main>
 <div class="wrap about-top">

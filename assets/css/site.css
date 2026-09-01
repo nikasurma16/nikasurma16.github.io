@@ -59,6 +59,13 @@ body:not(.deck-page) #veil{
   background:linear-gradient(rgba(6,7,12,.72),rgba(6,7,12,.90));
 }
 
+/* The about page runs the blurred portrait clip instead of the smoke loop:
+   neutral rather than blue, and a shade lighter so the face stays present. */
+body.about-page{--bg-opacity:.85}
+body.about-page #veil{
+  background:linear-gradient(rgba(8,8,10,.58),rgba(8,8,10,.88));
+}
+
 main{position:relative;z-index:2}
 
 /* ---- language switching ------------------------------------------ */
