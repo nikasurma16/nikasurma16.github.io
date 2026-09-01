@@ -25,6 +25,7 @@ DST = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
 
 WIDTH, HEIGHT, FPS = 960, 540, 30
 CROSSFADE = 2.0
+ROTATE = True      # upside down
 
 
 def chain(src, start, length):
@@ -32,13 +33,14 @@ def chain(src, start, length):
     return (
         "[0:v]trim=start={s}:duration={total},setpts=PTS-STARTPTS,"
         "fps={fps},scale={w}:{h}:force_original_aspect_ratio=increase,"
-        "crop={w}:{h},hqdn3d=3:3:6:6,format=yuv420p,split[a][b];"
+        "crop={w}:{h},{r}hqdn3d=3:3:6:6,format=yuv420p,split[a][b];"
         # xfade insists on a constant frame rate, which trim/setpts loses.
         "[a]trim=duration={L},setpts=PTS-STARTPTS,fps={fps},settb=AVTB[head];"
         "[b]trim=start={L}:duration={c},setpts=PTS-STARTPTS,fps={fps},settb=AVTB[tail];"
         "[tail][head]xfade=transition=fade:duration={c}:offset=0[v]"
     ).format(s=start, total=length + c, L=length, c=c,
-             fps=FPS, w=WIDTH, h=HEIGHT)
+             fps=FPS, w=WIDTH, h=HEIGHT,
+             r="hflip,vflip," if ROTATE else "")
 
 
 def main():
@@ -68,7 +70,10 @@ def main():
     subprocess.run([FFMPEG, "-y", "-loglevel", "error",
                     "-ss", str(start + length / 2), "-i", src, "-frames:v", "1",
                     "-vf", "scale={w}:{h}:force_original_aspect_ratio=increase,"
-                           "crop={w}:{h}".format(w=WIDTH, h=HEIGHT), still], check=True)
+                           "crop={w}:{h},{r}".format(
+                               w=WIDTH, h=HEIGHT,
+                               r="hflip,vflip" if ROTATE else "null"),
+                    still], check=True)
     poster = os.path.join(DST, name + "-poster.jpg")
     Image.open(still).convert("RGB").save(poster, "JPEG", quality=76,
                                           optimize=True, progressive=True)
