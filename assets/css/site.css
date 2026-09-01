@@ -15,10 +15,15 @@
 
 *,*::before,*::after{box-sizing:border-box}
 
-html{-webkit-text-size-adjust:100%}
+/* A tilted cut-out sticks out past its own layout box, which is enough to
+   put a horizontal scrollbar on the page. Clip rather than scroll — nothing
+   here is meant to be reached sideways. */
+html{-webkit-text-size-adjust:100%;overflow-x:hidden;overflow-x:clip}
 
 body{
   margin:0;
+  overflow-x:hidden;
+  overflow-x:clip;
   background:var(--bg);
   color:var(--fg);
   font-family:var(--sans);

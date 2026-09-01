@@ -16,7 +16,7 @@ SITE_URL = "https://nika-sur-ma.github.io"
 NAME = "nika sür-mä"
 
 # Change this line and rebuild to publish a contact address.
-EMAIL = ""            # e.g. "hello@example.com"
+EMAIL = "agoalter@gmail.com"
 TELEGRAM = ""         # e.g. "https://t.me/username"
 INSTAGRAM = "https://www.instagram.com/nika_sur_ma/"
 
