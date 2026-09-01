@@ -3,6 +3,7 @@
 Cut a seamless background loop out of a long clip.
 
     python tools/make_page_loop.py <source.mp4> <name> <start_seconds> [length]
+                                   [--upright] [--gray]
 
 The loop opens on a crossfade between its own tail and its own head, so the
 repeat has no cut:
@@ -25,11 +26,13 @@ DST = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
 
 WIDTH, HEIGHT, FPS = 960, 540, 30
 CROSSFADE = 2.0
-ROTATE = True      # upside down
+ROTATE = True      # upside down; pass --upright to keep it the right way up
+GRAY = False       # pass --gray for monochrome
 
 
 def chain(src, start, length):
     c = CROSSFADE
+    look = ("hflip,vflip," if ROTATE else "") + ("hue=s=0," if GRAY else "")
     return (
         "[0:v]trim=start={s}:duration={total},setpts=PTS-STARTPTS,"
         "fps={fps},scale={w}:{h}:force_original_aspect_ratio=increase,"
@@ -39,16 +42,23 @@ def chain(src, start, length):
         "[b]trim=start={L}:duration={c},setpts=PTS-STARTPTS,fps={fps},settb=AVTB[tail];"
         "[tail][head]xfade=transition=fade:duration={c}:offset=0[v]"
     ).format(s=start, total=length + c, L=length, c=c,
-             fps=FPS, w=WIDTH, h=HEIGHT,
-             r="hflip,vflip," if ROTATE else "")
+             fps=FPS, w=WIDTH, h=HEIGHT, r=look)
 
 
 def main():
-    if len(sys.argv) < 4:
+    global ROTATE, GRAY
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    flags = {a for a in sys.argv[1:] if a.startswith("--")}
+    if "--upright" in flags:
+        ROTATE = False
+    if "--gray" in flags:
+        GRAY = True
+
+    if len(args) < 3:
         print(__doc__)
         return 1
-    src, name, start = sys.argv[1], sys.argv[2], float(sys.argv[3])
-    length = float(sys.argv[4]) if len(sys.argv) > 4 else 16.0
+    src, name, start = args[0], args[1], float(args[2])
+    length = float(args[3]) if len(args) > 3 else 16.0
 
     os.makedirs(DST, exist_ok=True)
     filt = chain(src, start, length)
@@ -70,9 +80,10 @@ def main():
     subprocess.run([FFMPEG, "-y", "-loglevel", "error",
                     "-ss", str(start + length / 2), "-i", src, "-frames:v", "1",
                     "-vf", "scale={w}:{h}:force_original_aspect_ratio=increase,"
-                           "crop={w}:{h},{r}".format(
+                           "crop={w}:{h},{r}null".format(
                                w=WIDTH, h=HEIGHT,
-                               r="hflip,vflip" if ROTATE else "null"),
+                               r=("hflip,vflip," if ROTATE else "")
+                                 + ("hue=s=0," if GRAY else "")),
                     still], check=True)
     poster = os.path.join(DST, name + "-poster.jpg")
     Image.open(still).convert("RGB").save(poster, "JPEG", quality=76,

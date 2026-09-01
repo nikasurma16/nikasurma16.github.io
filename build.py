@@ -237,6 +237,7 @@ WORKS = [
  "sub_ru": "Победитель опен-колла на 3D-мэппинг фасада Александринского театра. "
            "Фестиваль медиаискусства D/G/TAL RA/N, Санкт-Петербург, 2025.",
  "cover": "rain-facade.jpg", "fit": "cover", "bg": "rain",
+ "hero": "rain-festival-poster.jpg",
  "meta": [
    ("Year", "Год", "2025", "2025"),
    ("Award", "Награда",
@@ -267,10 +268,7 @@ WORKS = [
    "где катастрофа и восстановление существуют одновременно, а искусство становится "
    "пространством непрерывного перерождения.",
  ],
- "gallery": [
-   ("rain-longexp.jpg", "cover", "Façade projection", "Проекция на фасаде"),
-   ("rain-poster.jpg", "cover", "D/G/TAL RA/N, 2025", "D/G/TAL RA/N, 2025"),
- ],
+ "gallery": [],
 },
 {
  "slug": "magic-lantern",
@@ -278,7 +276,7 @@ WORKS = [
  "title_en": "Magic Lantern", "title_ru": "Волшебный фонарь",
  "sub_en": "Night of Light, Gatchina, 2025. Media art and sound design; music and animation.",
  "sub_ru": "«Ночь света», Гатчина, 2025. Медиахудожница и саунд-дизайн; музыка и анимация.",
- "cover": "lantern-credits.jpg", "fit": "contain",
+ "cover": "lantern-credits.jpg", "fit": "contain", "bg": "lantern",
  "meta": [
    ("Year", "Год", "2025", "2025"),
    ("Festival", "Фестиваль",
@@ -333,7 +331,7 @@ WORKS = [
            "Glitching Environments, group exhibition, AIR ITMO, 2026.",
  "sub_ru": "Глитч как автономное присутствие внутри цифровой среды. "
            "«Сбоящие среды», групповая выставка, AIR ITMO, 2026.",
- "cover": "cage-01.jpg", "fit": "cover",
+ "cover": "cage-01.jpg", "fit": "cover", "bg": "cage",
  "meta": [
    ("Year", "Год", "2026", "2026"),
    ("Exhibition", "Выставка",
@@ -551,7 +549,7 @@ WORKS = [
  "title_en": "Ivory Tower VII", "title_ru": "Башня из слоновой кости VII",
  "sub_en": "Sound production in sonic improvisation with experimental instruments from Dom Radio.",
  "sub_ru": "Звуковое производство в звуковой импровизации на экспериментальных инструментах Дома радио.",
- "cover": "ivory.jpg", "fit": "cover",
+ "cover": "ivory.jpg", "fit": "cover", "bg": "ivory",
  "meta": [
    ("Role", "Роль",
     "Participant in the laboratory",
@@ -743,7 +741,7 @@ def render_work(i, w):
 </body>
 </html>
 """.format(fit=w["fit"],
-           cutout=cut(i, w["cover"], "../", w["fit"], eager=True),
+           cutout=cut(i, w.get("hero", w["cover"]), "../", w["fit"], eager=True),
            kicker=t(w["kicker_en"], w["kicker_ru"]),
            title=t(w["title_en"], w["title_ru"]),
            sub=t(w["sub_en"], w["sub_ru"]),
