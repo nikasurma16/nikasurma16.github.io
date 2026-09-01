@@ -125,7 +125,8 @@ def t(en, ru, tag="span", cls=None):
 TILTS = [-3.4, 2.6, -1.9, 3.9, -2.8, 1.7, -4.2, 2.2, -1.4, 3.1, -2.6, 1.2]
 
 
-def cut(i, src, prefix, fit="cover", eager=False, klass="", flip=False, video=None):
+def cut(i, src, prefix, fit="cover", eager=False, klass="", flip=False,
+        video=None, colour=False):
     """One scissor-cut piece. `flip` hangs it upside down; `video` names a
     loop in assets/video/ to paste on instead of a photograph."""
     if video:
@@ -138,11 +139,12 @@ def cut(i, src, prefix, fit="cover", eager=False, klass="", flip=False, video=No
         inner = ('<img src="{p}assets/img/{src}" alt=""{load} decoding="async">'
                  ).format(p=prefix, src=src,
                           load=' fetchpriority="high"' if eager else ' loading="lazy"')
-    return ('<div class="cut{k}" data-fit="{fit}" data-shape="{shape}"{flip} '
+    return ('<div class="cut{k}" data-fit="{fit}" data-shape="{shape}"{flip}{col} '
             'style="--tilt:{tilt}deg;--d:{delay}ms">{inner}</div>').format(
         k=(" " + klass) if klass else "",
         fit=fit, shape=(i % 5) + 1, tilt=TILTS[i % len(TILTS)],
         flip=' data-flip="1"' if flip else "",
+        col=' data-colour="1"' if colour else "",
         delay=(i % 6) * 70, inner=inner)
 
 
@@ -249,7 +251,7 @@ WORKS = [
  "sub_ru": "Победитель конкурса купольных проекций «Город будущего» фестиваля ДЕЛЬТА’n. "
            "Город, который поддерживается в порядке ни для кого. С Майком Ивом и Павлом Гордеевым.",
  "cover": "city-04.webp", "fit": "contain",
- "hero": "delta-poster.jpg", "hero_fit": "cover",
+ "hero": "delta-poster.jpg", "hero_fit": "cover", "hero_colour": True,
  "meta": [
    ("Year", "Год", "2026", "2026"),
    ("Award", "Награда",
@@ -785,6 +787,7 @@ def render_work(i, w):
            cutout=cut(i, w.get("hero", w["cover"]), "../",
                       w.get("hero_fit", w["fit"]), eager=True,
                       flip=w.get("flip", False),
+                      colour=w.get("hero_colour", False),
                       video=w.get("cover_video")),
            kicker=t(w["kicker_en"], w["kicker_ru"]),
            title=t(w["title_en"], w["title_ru"]),
