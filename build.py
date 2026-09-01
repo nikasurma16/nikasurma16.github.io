@@ -93,8 +93,9 @@ def cut(i, src, prefix, fit="cover", eager=False, klass="", flip=False, video=No
     loop in assets/video/ to paste on instead of a photograph."""
     if video:
         inner = ('<video autoplay muted loop playsinline preload="metadata" '
-                 'aria-hidden="true" poster="{p}assets/video/{v}-poster.jpg">\n'
-                 '{sources}</video>').format(p=prefix, v=video,
+                 'aria-hidden="true" poster="{p}{vp}">\n'
+                 '{sources}</video>').format(p=prefix,
+                                             vp=asset('assets/video/%s-poster.jpg' % video),
                                              sources=bg_sources(video, prefix))
     else:
         inner = ('<img src="{p}assets/img/{src}" alt=""{load} decoding="async">'
@@ -117,8 +118,11 @@ def bg_sources(bg, prefix):
         if os.path.exists(path):
             found.append((os.path.getsize(path), ext, mime))
     found.sort()
-    return "".join('  <source src="%sassets/video/%s.%s" type="%s">\n'
-                   % (prefix, bg, ext, mime) for _, ext, mime in found)
+    # Stamped like the stylesheets: a re-encode keeps its filename, and
+    # without a version the browser serves the old cut forever.
+    return "".join('  <source src="%s%s" type="%s">\n'
+                   % (prefix, asset("assets/video/%s.%s" % (bg, ext)), mime)
+                   for _, ext, mime in found)
 
 
 def head(title, desc, prefix, og_image, bg="portrait", grain=0):
@@ -144,12 +148,13 @@ def head(title, desc, prefix, og_image, bg="portrait", grain=0):
 </head>
 <body{body_class}>
 <video id="bgv" aria-hidden="true" tabindex="-1" autoplay muted loop playsinline
-       preload="auto" data-grain="{grain}" poster="{p}assets/video/{bg}-poster.jpg">
+       preload="auto" data-grain="{grain}" poster="{p}{bgposter}">
 {sources}</video>
 <canvas id="bg" aria-hidden="true"></canvas>
 <div id="veil" aria-hidden="true"></div>
 """.format(title=title, desc=desc, p=prefix, site=SITE_URL, og=og_image, bg=bg,
            grain=grain, sources=bg_sources(bg, prefix),
+           bgposter=asset("assets/video/%s-poster.jpg" % bg),
            css=asset("assets/css/site.css"), bgjs=asset("assets/js/bg.js"),
            fontcss=('<link rel="stylesheet" href="%s%s">\n'
                     % (prefix, asset(FONT_CSS)) if FONT_CSS else ''),
@@ -791,8 +796,8 @@ def render_about():
       <a class="cut reel" data-shape="2" style="--tilt:-2.4deg"
          href="{instagram}" target="_blank" rel="me noopener">
         <video autoplay muted loop playsinline preload="metadata"
-               poster="assets/video/reel-poster.jpg" aria-label="{alt}">
-          <source src="assets/video/reel.mp4" type="video/mp4">
+               poster="{reelposter}" aria-label="{alt}">
+          <source src="{reelsrc}" type="video/mp4">
         </video>
         <span class="reel-tag">instagram</span>
       </a>
@@ -825,6 +830,8 @@ def render_about():
            rows="\n".join(rows),
            contact_lbl=t("Contact", "Контакты"),
            contact=contact_html,
+           reelposter=asset("assets/video/reel-poster.jpg"),
+           reelsrc=asset("assets/video/reel.mp4"),
            sitejs=asset('assets/js/site.js'),
            footer=footer(""))
     write("about.html", html)
