@@ -278,12 +278,12 @@ WORKS = [
  "title_en": "Magic Lantern", "title_ru": "Волшебный фонарь",
  "sub_en": "Night of Light, Gatchina, 2025. Media art and sound design; music and animation.",
  "sub_ru": "«Ночь света», Гатчина, 2025. Медиахудожница и саунд-дизайн; музыка и анимация.",
- "cover": "lantern-credits.jpg", "fit": "contain", "bg": "lantern", "flip": True,
+ "cover": "lantern-festival.jpg", "fit": "cover", "bg": "lantern", "flip": True,
  "meta": [
    ("Year", "Год", "2025", "2025"),
    ("Festival", "Фестиваль",
-    "Night of Light, Gatchina Museum-Reserve",
-    "«Ночь света», Гатчинский музей-заповедник"),
+    "Night of Light, Gatchina Museum-Reserve, 28–30 August 2025",
+    "«Ночь света», Гатчинский музей-заповедник, 28–30 августа 2025"),
    ("Role", "Роль",
     "Media artist, sound design — music and animation",
     "Медиахудожница, саунд-дизайн — музыка и анимация"),
@@ -323,7 +323,9 @@ WORKS = [
    "предстоит вступить в коммуникацию с прошлыми обитателями Гатчинского дворца "
    "и рассказать о себе.",
  ],
- "gallery": [],
+ "gallery": [
+   ("lantern-credits.jpg", "cover", "Credits sheet", "Лист с титрами"),
+ ],
 },
 {
  "slug": "cage-of-dome",
