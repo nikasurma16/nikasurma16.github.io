@@ -59,12 +59,26 @@ body:not(.deck-page) #veil{
   background:linear-gradient(rgba(6,7,12,.72),rgba(6,7,12,.90));
 }
 
-/* The about page runs the blurred portrait clip instead of the smoke loop:
-   neutral rather than blue, and a shade lighter so the face stays present. */
+/* The about page runs the blurred portrait clip: neutral rather than blue,
+   and a shade lighter so the face stays present. */
 body.about-page{--bg-opacity:.85}
 body.about-page #veil{
   background:linear-gradient(rgba(8,8,10,.58),rgba(8,8,10,.88));
 }
+
+/* On the mapping page the background IS the work — documentation of the
+   projection itself — so it is held back only as far as the text needs. */
+body.bg-rain{--bg-opacity:1;--faint:#7e7b75}
+body.bg-rain #veil{
+  background:linear-gradient(rgba(6,7,12,.58),rgba(6,7,12,.86));
+}
+/* Small type has to survive passing over the bright parts of the projection. */
+body.bg-rain .meta,
+body.bg-rain .prose,
+body.bg-rain .section-label,
+body.bg-rain .grid figcaption,
+body.bg-rain .next,
+body.bg-rain .foot{text-shadow:0 1px 3px rgba(0,0,0,.85)}
 
 main{position:relative;z-index:2}
 

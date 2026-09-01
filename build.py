@@ -59,6 +59,19 @@ def cut(i, src, prefix, fit="cover", eager=False, klass=""):
         load=' fetchpriority="high"' if eager else ' loading="lazy"')
 
 
+def bg_sources(bg, prefix):
+    """Only offer the encodings that actually exist, smallest first — VP9
+    does not always beat H.264, and a missing <source> costs a round trip."""
+    found = []
+    for ext, mime in (("webm", "video/webm"), ("mp4", "video/mp4")):
+        path = os.path.join(ROOT, "assets", "video", "%s.%s" % (bg, ext))
+        if os.path.exists(path):
+            found.append((os.path.getsize(path), ext, mime))
+    found.sort()
+    return "".join('  <source src="%sassets/video/%s.%s" type="%s">\n'
+                   % (prefix, bg, ext, mime) for _, ext, mime in found)
+
+
 def head(title, desc, prefix, og_image, bg="portrait"):
     return """<!doctype html>
 <html lang="en">
@@ -83,12 +96,11 @@ def head(title, desc, prefix, og_image, bg="portrait"):
 <body{body_class}>
 <video id="bgv" aria-hidden="true" tabindex="-1" autoplay muted loop playsinline
        preload="auto" poster="{p}assets/video/{bg}-poster.jpg">
-  <source src="{p}assets/video/{bg}.webm" type="video/webm">
-  <source src="{p}assets/video/{bg}.mp4" type="video/mp4">
-</video>
+{sources}</video>
 <canvas id="bg" aria-hidden="true"></canvas>
 <div id="veil" aria-hidden="true"></div>
 """.format(title=title, desc=desc, p=prefix, site=SITE_URL, og=og_image, bg=bg,
+           sources=bg_sources(bg, prefix),
            css=asset("assets/css/site.css"), bgjs=asset("assets/js/bg.js"),
            body_class="{BODY_CLASS}")
 
@@ -224,7 +236,7 @@ WORKS = [
            "Digital Rain Festival, St. Petersburg, 2025.",
  "sub_ru": "Победитель опен-колла на 3D-мэппинг фасада Александринского театра. "
            "Фестиваль медиаискусства D/G/TAL RA/N, Санкт-Петербург, 2025.",
- "cover": "rain-facade.jpg", "fit": "cover",
+ "cover": "rain-facade.jpg", "fit": "cover", "bg": "rain",
  "meta": [
    ("Year", "Год", "2025", "2025"),
    ("Award", "Награда",
@@ -238,17 +250,22 @@ WORKS = [
     "Фасад Александринского театра"),
  ],
  "body_en": [
-   "A fantasy on the theme of synesthetic flow, including the representation of "
-   "V. V. Kandinsky’s <em>Composition VI</em> and <em>Composition VII</em> as treasures "
-   "of twentieth-century culture.",
-   "nika sür-mä, in tandem with AI, paints an endless synesthetic rain — a symbol of eternal "
-   "flow through the flood, toward restoration through destruction.",
+   "A fantasy on the theme of synesthetic flow, inspired by two paintings of Wassily "
+   "Kandinsky: <em>Composition VI</em> and <em>Composition VII</em>.",
+   "At its centre is the idea of the Flood — not as a story but as an inner state: renewal "
+   "through destruction, the equilibrium of opposites, the dissolution of the image into pure "
+   "painting. On the façade this becomes an endless synthetic rain, a symbol of perpetual flow "
+   "in which catastrophe and restoration exist at the same time, and art becomes a space of "
+   "continuous rebirth.",
  ],
  "body_ru": [
-   "Фантазия на тему синестетического потока, включающая репрезентацию "
-   "«Композиции VI» и «Композиции VII» В. В. Кандинского как сокровищ культуры XX века.",
-   "Ника Сурма в тандеме с ИИ пишет бесконечный синестетический дождь — символ вечного "
-   "потока через потоп, к восстановлению через разрушение.",
+   "Фантазия на тему синестетического потока, вдохновлённая работами Василия Кандинского: "
+   "«Композиция VI» и «Композиция VII».",
+   "В центре — идея Всемирного потопа не как сюжета, а как внутреннего состояния: обновление "
+   "через разрушение, равновесие противоположностей, растворение образа в чистой живописи. "
+   "В мэппинге это превращается в бесконечный синтетический дождь — символ вечного потока, "
+   "где катастрофа и восстановление существуют одновременно, а искусство становится "
+   "пространством непрерывного перерождения.",
  ],
  "gallery": [
    ("rain-longexp.jpg", "cover", "Façade projection", "Проекция на фасаде"),
@@ -689,7 +706,9 @@ def render_work(i, w):
     html = head(
         "%s — %s" % (w["title_en"], NAME),
         re.sub("<[^>]+>", "", w["sub_en"]),
-        "../", w["cover"]).replace("{BODY_CLASS}", "")
+        "../", w["cover"],
+        bg=w.get("bg", "portrait")).replace(
+            "{BODY_CLASS}", ' class="bg-%s"' % w.get("bg", "portrait"))
     html += header("../", "work")
     html += """<main>
 <section class="hero" data-fit="{fit}">
