@@ -59,6 +59,54 @@ body:not(.deck-page) #veil{
   background:linear-gradient(rgba(6,7,12,.72),rgba(6,7,12,.90));
 }
 
+/* ---- splash --------------------------------------------------------- */
+/* The way in: the same portrait loop as the about page, held closer, and
+   two doors. */
+
+body.splash-page{overflow:hidden;--bg-opacity:1}
+body.splash-page #bgv,
+body.splash-page #bg{transform:scale(1.42);transform-origin:52% 46%}
+body.splash-page #veil{background:rgba(8,8,10,.56)}
+
+.splash{
+  position:relative;z-index:2;
+  height:100dvh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:clamp(14px,2.2vh,26px);
+  padding:var(--hdr) var(--pad) 0;
+  text-align:center;
+}
+.splash-name{
+  margin:0;
+  font-weight:200;font-size:clamp(34px,7vw,96px);line-height:1;
+  letter-spacing:.02em;text-transform:uppercase;
+  text-shadow:0 2px 26px rgba(0,0,0,.6);
+}
+.splash-line{
+  margin:0;
+  font-family:var(--mono);font-size:10px;letter-spacing:.28em;
+  text-transform:uppercase;color:#cfccc6;
+  text-shadow:0 1px 10px rgba(0,0,0,.8);
+}
+.splash-doors{
+  display:flex;flex-wrap:wrap;justify-content:center;
+  gap:clamp(18px,5vw,64px);
+  margin-top:clamp(20px,4vh,48px);
+}
+.splash-doors a{
+  font-size:clamp(13px,1.5vw,17px);font-weight:300;
+  text-shadow:0 1px 12px rgba(0,0,0,.75);
+  letter-spacing:.24em;text-transform:uppercase;
+  padding:14px 4px 10px;
+  border-bottom:1px solid var(--line);
+  transition:color .3s,border-color .3s,letter-spacing .3s;
+}
+.splash-doors a:hover{color:#fff;border-color:#fff;letter-spacing:.3em}
+
+@media (max-width:520px){
+  .splash-doors{flex-direction:column;gap:6px}
+}
+
 /* The about page runs the blurred portrait clip: neutral rather than blue,
    and a shade lighter so the face stays present. */
 body.about-page{--bg-opacity:.85}

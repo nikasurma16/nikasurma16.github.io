@@ -53,10 +53,14 @@ def framed(src, zoom):
 
 
 def main():
-    if len(sys.argv) < 4:
+    global ROTATE
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    if "--upright" in sys.argv[1:]:
+        ROTATE = False
+    if len(args) < 3:
         print(__doc__)
         return 1
-    name, paths = sys.argv[1], sys.argv[2:]
+    name, paths = args[0], args[1:]
 
     plates = [prepare(p) for p in paths]
     n = len(plates)

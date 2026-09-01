@@ -107,24 +107,25 @@ def head(title, desc, prefix, og_image, bg="portrait", grain=0):
            body_class="{BODY_CLASS}")
 
 
-def header(prefix, here=""):
+def header(prefix, here="", minimal=False):
+    """`minimal` drops the nav links — the splash page is itself the choice."""
     def cur(page):
         return ' aria-current="page"' if page == here else ""
+    links = "" if minimal else """
+    <a href="{p}works.html"{c1}>{work}</a>
+    <a href="{p}about.html"{c2}>{about}</a>""".format(
+        p=prefix, work=t("work", "работы"), about=t("about", "обо мне"),
+        c1=cur("work"), c2=cur("about"))
     return """<header class="hdr">
   <a class="mark" href="{p}index.html">{name}</a>
-  <nav class="nav">
-    <a href="{p}index.html"{c1}>{work}</a>
-    <a href="{p}about.html"{c2}>{about}</a>
+  <nav class="nav">{links}
     <div class="lang">
       <button type="button" data-lang="en" aria-pressed="true">EN</button>
       <button type="button" data-lang="ru" aria-pressed="false">RU</button>
     </div>
   </nav>
 </header>
-""".format(p=prefix, name=NAME,
-           work=t("work", "работы"),
-           about=t("about", "обо мне"),
-           c1=cur("work"), c2=cur("about"))
+""".format(p=prefix, name=NAME, links=links)
 
 
 def footer(prefix):
@@ -173,7 +174,7 @@ WORKS = [
    ("Duration", "Хронометраж", "4 min", "4 мин"),
    ("Authors", "Авторы",
     "nika sür-mä, Mike Iv, Pavel Gordeev",
-    "Ника Сурма, Майк Ив, Павел Гордеев"),
+    "nika sür-mä, Майк Ив, Павел Гордеев"),
  ],
  "body_en": [
    "What happens to a city if its principal function changes? The first cities arose from people’s "
@@ -181,20 +182,6 @@ WORKS = [
    "being stops being the condition on which a city exists, does its infrastructure change — does it "
    "remain at all? The city of the future may be the first one built by people and no longer "
    "dependent on them.",
-   "City 15741 has no narrative. There are no people in it, no traces of people, and no moment "
-   "at which they left. The city is shown afterwards — but “afterwards” is not offered as loss, "
-   "because there is nothing to lose: the space does not remember what came before.",
-   "Its three acts are not exposition, development and finale but three degrees of liminality. "
-   "<strong>Threshold</strong> — the image still resembles a place: there is sky, a horizon and a bottom, "
-   "everything is in working order, and nothing begins. <strong>Repeat</strong> — the city recurs; a loop "
-   "without an original. <strong>Without scale</strong> — every point of reference disappears, including the city itself.",
-   "The cold here is not temperature but working order. Nothing is ruined, nothing is abandoned, "
-   "there is no dust and no wear — the city is being maintained. That is what makes it inhuman: "
-   "it is kept in order for no one.",
-   "On the dome the geometry of the city coincides with the geometry of the projection: the arcs "
-   "of the overpasses fall as circles, the horizon closes into a full ring overhead. Haze is the only "
-   "carrier of depth, so depth can be taken away by the same means. Nothing moves except the camera — "
-   "a moving object would be an event, and there are no events.",
  ],
  "body_ru": [
    "Что произойдёт с городом, если его основная функция изменится? Первые города возникли "
@@ -202,22 +189,11 @@ WORKS = [
    "в одиночку. Если человек перестанет быть главным условием существования города, изменятся "
    "ли его инфраструктура, останется ли она? Город будущего может стать первым созданным "
    "человеком, но больше не зависящим от него.",
-   "В фильме нет повествования. Нет людей, нет их следов, нет момента, когда они ушли. "
-   "Город показан уже после — но «после» не подаётся как утрата, потому что нечего терять: "
-   "пространство не помнит, что было до.",
-   "Три акта — не завязка, развитие и финал, а три степени лиминальности. "
-   "<strong>Порог</strong> — ещё похоже на место: есть небо, горизонт и низ, всё исправно и ничего не начинается. "
-   "<strong>Повтор</strong> — город повторяется: петля без оригинала. "
-   "<strong>Без масштаба</strong> — исчезает любая точка отсчёта, включая сам город.",
-   "Холод здесь не в температуре, а в исправности. Ничего не разрушено, ничего не заброшено, "
-   "нет пыли и следов износа — город обслуживается. Именно это делает его нечеловеческим: "
-   "он поддерживается в порядке ни для кого.",
-   "На куполе геометрия города совпадает с геометрией проекции: дуги эстакад ложатся "
-   "окружностями, горизонт замыкается кольцом над головой. Дымка — единственный носитель глубины, "
-   "значит ею же глубину можно и отнять. Ничего не движется, кроме камеры: движение объекта "
-   "было бы событием, а событий здесь нет.",
  ],
  "gallery": [
+   ("delta-poster.jpg", "cover",
+    "ДЕЛЬТА’n — dome projection competition final, Planetarium No. 1",
+    "ДЕЛЬТА’n — финал конкурса купольных проекций, Планетарий №1", True),
    ("city-01.webp", "contain", "Act I — Threshold", "Акт I — Порог"),
    ("city-02.webp", "contain", "Act I — Threshold", "Акт I — Порог"),
    ("city-03.webp", "contain", "Act II — Repeat", "Акт II — Повтор"),
@@ -324,7 +300,7 @@ WORKS = [
    "и рассказать о себе.",
  ],
  "gallery": [
-   ("lantern-credits.jpg", "cover", "Credits sheet", "Лист с титрами"),
+   ("lantern-credits.jpg", "cover", "Credits sheet", "Лист с титрами", True),
  ],
 },
 {
@@ -513,7 +489,7 @@ WORKS = [
    "using experimental instruments from Dom Radio.",
  ],
  "body_ru": [
-   "В качестве участницы лаборатории Ника Сурма исследовала звуковое производство в звуковой "
+   "В качестве участницы лаборатории nika sür-mä исследовала звуковое производство в звуковой "
    "импровизации на экспериментальных инструментах Дома радио.",
  ],
  "gallery": [
@@ -582,7 +558,32 @@ def write(path, html):
     print("  ", path)
 
 
-def render_index():
+def render_splash():
+    """The way in: the portrait loop held close, and the two doors."""
+    html = head(
+        "nika sür-mä",
+        "Media artist: fulldome film, projection mapping, AR and multichannel sound.",
+        "", "portrait.jpg").replace("{BODY_CLASS}", ' class="splash-page"')
+    html += header("", minimal=True)
+    html += """<main class="splash">
+  <h1 class="splash-name">{name}</h1>
+  <p class="splash-line">{line}</p>
+  <nav class="splash-doors" aria-label="{nav}">
+    <a href="works.html">{work}</a>
+    <a href="about.html">{about}</a>
+  </nav>
+</main>
+""".format(name=NAME,
+           line=t("media artist", "медиахудожница"),
+           nav="Sections",
+           work=t("work", "работы"),
+           about=t("about", "обо мне"))
+    html += ('<script src="%s" defer></script>\n</body>\n</html>\n'
+             % asset("assets/js/site.js"))
+    write("index.html", html)
+
+
+def render_works():
     slides = []
     dots = []
     for i, w in enumerate(WORKS):
@@ -620,7 +621,7 @@ def render_index():
         t("scroll", "скролл"))
     html += ('<script src="%s" defer></script>\n</body>\n</html>\n'
              % asset("assets/js/site.js"))
-    write("index.html", html)
+    write("works.html", html)
 
 
 def render_work(i, w):
@@ -639,13 +640,15 @@ def render_work(i, w):
     gallery = ""
     if w["gallery"]:
         figs = []
-        for j, (src, fit, cap_en, cap_ru) in enumerate(w["gallery"]):
+        for j, item in enumerate(w["gallery"]):
+            # (src, fit, caption_en, caption_ru[, flip])
+            src, fit, cap_en, cap_ru = item[:4]
+            flip = item[4] if len(item) > 4 else False
             cap = ""
             if cap_en or cap_ru:
                 cap = "\n      <figcaption>%s</figcaption>" % t(cap_en, cap_ru)
             figs.append('    <figure class="cut-item">\n      %s%s\n    </figure>'
-                        % (cut(j + 1, src, "../", fit,
-                               flip=w.get("flip", False)), cap))
+                        % (cut(j + 1, src, "../", fit, flip=flip), cap))
         gallery = ('  <p class="section-label">%s</p>\n  <div class="grid">\n%s\n  </div>\n'
                    % (t("Images", "Изображения"),
                       "\n".join(figs)))
@@ -786,7 +789,7 @@ def render_extras():
           '<circle cx="16" cy="16" r="11" fill="none" stroke="#eceae5" stroke-width="1.4"/>'
           '<circle cx="16" cy="16" r="4.5" fill="#eceae5"/></svg>\n')
 
-    urls = ["", "about.html"] + ["work/%s.html" % w["slug"] for w in WORKS]
+    urls = ["", "works.html", "about.html"] + ["work/%s.html" % w["slug"] for w in WORKS]
     body = "".join("  <url><loc>%s/%s</loc></url>\n" % (SITE_URL, u) for u in urls)
     write("sitemap.xml",
           '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -813,7 +816,8 @@ def prune_work_pages():
 if __name__ == "__main__":
     print("building %s" % SITE_URL)
     prune_work_pages()
-    render_index()
+    render_splash()
+    render_works()
     for i, w in enumerate(WORKS):
         render_work(i, w)
     render_about()
