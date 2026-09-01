@@ -40,34 +40,39 @@
 
   var inlineVideos = document.querySelectorAll('.cut video');
 
-  /* Phones will not autoplay these either, and iOS answers with its own
-     transport controls laid over the page. Swap in the poster frame — the
-     cut-out keeps its shape and the link around it still works. */
-  if (window.matchMedia && window.matchMedia('(max-width: 760px)').matches) {
-    Array.prototype.forEach.call(inlineVideos, function (v) {
-      var poster = v.getAttribute('poster');
-      if (!poster) return;
-      var img = document.createElement('img');
-      img.src = poster;
-      img.alt = '';
-      img.decoding = 'async';
-      v.parentNode.replaceChild(img, v);
-    });
-    inlineVideos = [];
+  /* Try to play, and only fall back to the poster frame if the browser
+     actually refuses — a phone plays these fine until Low Power Mode, and
+     iOS answers a refusal by laying its own transport controls over the
+     page, which is what has to be avoided. */
+  function freeze(v) {
+    var poster = v.getAttribute('poster');
+    if (!poster || !v.parentNode) return;
+    var img = document.createElement('img');
+    img.src = poster;
+    img.alt = '';
+    img.decoding = 'async';
+    v.parentNode.replaceChild(img, v);
   }
 
   function nudge() {
     Array.prototype.forEach.call(inlineVideos, function (v) {
-      if (!v.paused) return;
+      if (!v.isConnected || !v.paused) return;
       var p = v.play();
-      if (p && p.catch) p.catch(function () { /* poster stands in */ });
+      if (p && p.catch) p.catch(function () { freeze(v); });
     });
   }
+
   if (inlineVideos.length) {
     nudge();
     ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) {
       window.addEventListener(ev, nudge, { passive: true });
     });
+    /* A refusal does not always reject; some browsers just never start. */
+    setTimeout(function () {
+      Array.prototype.forEach.call(inlineVideos, function (v) {
+        if (v.isConnected && v.paused) freeze(v);
+      });
+    }, 2500);
   }
 
   /* ---- paper cutouts ----------------------------------------------- */
