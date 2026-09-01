@@ -21,12 +21,15 @@ DST = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                    "assets", "video")
 
 SIZE = 1440        # 3x the 480x480 source
-SIGMA = 20         # blur radius at that size
+SIGMA = 10         # blur radius at that size
+ROTATE = True      # upside down
 NAME = "portrait"
 
 CHAIN = ("scale={s}:{s}:flags=lanczos,"
+         "{r}"
          "gblur=sigma={g}:steps=3,"
-         "format=yuv420p".format(s=SIZE, g=SIGMA))
+         "format=yuv420p".format(s=SIZE, g=SIGMA,
+                                 r="hflip,vflip," if ROTATE else ""))
 
 BOOMERANG = ("[0:v]" + CHAIN + ",split[a][b];"
              "[b]reverse[r];"

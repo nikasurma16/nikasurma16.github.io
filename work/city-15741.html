@@ -14,14 +14,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/site.css">
-<script src="../assets/js/bg.js" defer></script>
+<link rel="stylesheet" href="../assets/css/site.css?v=f480b6ed">
+<script>document.documentElement.classList.add('js')</script>
+<script src="../assets/js/bg.js?v=22881426" defer></script>
 </head>
 <body>
 <video id="bgv" aria-hidden="true" tabindex="-1" autoplay muted loop playsinline
-       preload="auto" poster="../assets/video/smoke-poster.jpg">
-  <source src="../assets/video/smoke.webm" type="video/webm">
-  <source src="../assets/video/smoke.mp4" type="video/mp4">
+       preload="auto" poster="../assets/video/portrait-poster.jpg">
+  <source src="../assets/video/portrait.webm" type="video/webm">
+  <source src="../assets/video/portrait.mp4" type="video/mp4">
 </video>
 <canvas id="bg" aria-hidden="true"></canvas>
 <div id="veil" aria-hidden="true"></div>
@@ -38,12 +39,12 @@
 </header>
 <main>
 <section class="hero" data-fit="contain">
-  <div class="slide-bg"><img src="../assets/img/city-04.webp" alt="" fetchpriority="high" decoding="async"></div>
   <div class="cap">
     <p class="kicker"><span data-t="en">Fulldome film</span><span data-t="ru">Купольный фильм</span></p>
     <h1><span data-t="en">City 15741</span><span data-t="ru">Город 15741</span></h1>
     <p class="sub"><span data-t="en">Winner of the «City of the Future» dome projection competition at ДЕЛЬТА’n. A city kept in working order for no one. With Mike Iv and Pavel Gordeev.</span><span data-t="ru">Победитель конкурса купольных проекций «Город будущего» фестиваля ДЕЛЬТА’n. Город, который поддерживается в порядке ни для кого. С Майком Ивом и Павлом Гордеевым.</span></p>
   </div>
+  <div class="cut" data-fit="contain" data-shape="1" style="--tilt:-3.4deg;--d:0ms"><img src="../assets/img/city-04.webp" alt="" fetchpriority="high" decoding="async"></div>
 </section>
 
 <div class="wrap">
@@ -67,6 +68,8 @@
       </dl>
     </div>
     <div class="prose">
+      <div data-t="en"><p>What happens to a city if its principal function changes? The first cities arose from people’s need to come together, to exchange knowledge and to make what is impossible alone. If a human being stops being the condition on which a city exists, does its infrastructure change — does it remain at all? The city of the future may be the first one built by people and no longer dependent on them.</p></div>
+      <div data-t="ru"><p>Что произойдёт с городом, если его основная функция изменится? Первые города возникли из потребности людей объединяться, обмениваться знаниями и создавать то, что невозможно в одиночку. Если человек перестанет быть главным условием существования города, изменятся ли его инфраструктура, останется ли она? Город будущего может стать первым созданным человеком, но больше не зависящим от него.</p></div>
       <div data-t="en"><p>City 15741 has no narrative. There are no people in it, no traces of people, and no moment at which they left. The city is shown afterwards — but “afterwards” is not offered as loss, because there is nothing to lose: the space does not remember what came before.</p></div>
       <div data-t="ru"><p>В фильме нет повествования. Нет людей, нет их следов, нет момента, когда они ушли. Город показан уже после — но «после» не подаётся как утрата, потому что нечего терять: пространство не помнит, что было до.</p></div>
       <div data-t="en"><p>Its three acts are not exposition, development and finale but three degrees of liminality. <strong>Threshold</strong> — the image still resembles a place: there is sky, a horizon and a bottom, everything is in working order, and nothing begins. <strong>Repeat</strong> — the city recurs; a loop without an original. <strong>Without scale</strong> — every point of reference disappears, including the city itself.</p></div>
@@ -79,16 +82,46 @@
   </div>
   <p class="section-label"><span data-t="en">Images</span><span data-t="ru">Изображения</span></p>
   <div class="grid">
-    <figure data-fit="contain"><img src="../assets/img/city-01.webp" alt="" loading="lazy" decoding="async"><figcaption><span data-t="en">Act I — Threshold</span><span data-t="ru">Акт I — Порог</span></figcaption></figure>
-    <figure data-fit="contain"><img src="../assets/img/city-02.webp" alt="" loading="lazy" decoding="async"><figcaption><span data-t="en">Act I — Threshold</span><span data-t="ru">Акт I — Порог</span></figcaption></figure>
-    <figure data-fit="contain"><img src="../assets/img/city-03.webp" alt="" loading="lazy" decoding="async"><figcaption><span data-t="en">Act II — Repeat</span><span data-t="ru">Акт II — Повтор</span></figcaption></figure>
-    <figure data-fit="contain"><img src="../assets/img/city-05.webp" alt="" loading="lazy" decoding="async"><figcaption><span data-t="en">Act II — Repeat</span><span data-t="ru">Акт II — Повтор</span></figcaption></figure>
-    <figure data-fit="contain"><img src="../assets/img/city-06.webp" alt="" loading="lazy" decoding="async"><figcaption><span data-t="en">Act II — Repeat</span><span data-t="ru">Акт II — Повтор</span></figcaption></figure>
-    <figure data-fit="contain"><img src="../assets/img/city-07.webp" alt="" loading="lazy" decoding="async"><figcaption><span data-t="en">Act II — Repeat</span><span data-t="ru">Акт II — Повтор</span></figcaption></figure>
-    <figure data-fit="contain"><img src="../assets/img/city-08.webp" alt="" loading="lazy" decoding="async"><figcaption><span data-t="en">Act III — Without scale</span><span data-t="ru">Акт III — Без масштаба</span></figcaption></figure>
-    <figure data-fit="contain"><img src="../assets/img/city-09.webp" alt="" loading="lazy" decoding="async"><figcaption><span data-t="en">Act III — Without scale</span><span data-t="ru">Акт III — Без масштаба</span></figcaption></figure>
-    <figure data-fit="contain"><img src="../assets/img/city-10.webp" alt="" loading="lazy" decoding="async"><figcaption><span data-t="en">Act III — Without scale</span><span data-t="ru">Акт III — Без масштаба</span></figcaption></figure>
-    <figure data-fit="contain"><img src="../assets/img/city-11.webp" alt="" loading="lazy" decoding="async"><figcaption><span data-t="en">Act III — Without scale</span><span data-t="ru">Акт III — Без масштаба</span></figcaption></figure>
+    <figure class="cut-item">
+      <div class="cut" data-fit="contain" data-shape="2" style="--tilt:2.6deg;--d:70ms"><img src="../assets/img/city-01.webp" alt="" loading="lazy" decoding="async"></div>
+      <figcaption><span data-t="en">Act I — Threshold</span><span data-t="ru">Акт I — Порог</span></figcaption>
+    </figure>
+    <figure class="cut-item">
+      <div class="cut" data-fit="contain" data-shape="3" style="--tilt:-1.9deg;--d:140ms"><img src="../assets/img/city-02.webp" alt="" loading="lazy" decoding="async"></div>
+      <figcaption><span data-t="en">Act I — Threshold</span><span data-t="ru">Акт I — Порог</span></figcaption>
+    </figure>
+    <figure class="cut-item">
+      <div class="cut" data-fit="contain" data-shape="4" style="--tilt:3.9deg;--d:210ms"><img src="../assets/img/city-03.webp" alt="" loading="lazy" decoding="async"></div>
+      <figcaption><span data-t="en">Act II — Repeat</span><span data-t="ru">Акт II — Повтор</span></figcaption>
+    </figure>
+    <figure class="cut-item">
+      <div class="cut" data-fit="contain" data-shape="5" style="--tilt:-2.8deg;--d:280ms"><img src="../assets/img/city-05.webp" alt="" loading="lazy" decoding="async"></div>
+      <figcaption><span data-t="en">Act II — Repeat</span><span data-t="ru">Акт II — Повтор</span></figcaption>
+    </figure>
+    <figure class="cut-item">
+      <div class="cut" data-fit="contain" data-shape="1" style="--tilt:1.7deg;--d:350ms"><img src="../assets/img/city-06.webp" alt="" loading="lazy" decoding="async"></div>
+      <figcaption><span data-t="en">Act II — Repeat</span><span data-t="ru">Акт II — Повтор</span></figcaption>
+    </figure>
+    <figure class="cut-item">
+      <div class="cut" data-fit="contain" data-shape="2" style="--tilt:-4.2deg;--d:0ms"><img src="../assets/img/city-07.webp" alt="" loading="lazy" decoding="async"></div>
+      <figcaption><span data-t="en">Act II — Repeat</span><span data-t="ru">Акт II — Повтор</span></figcaption>
+    </figure>
+    <figure class="cut-item">
+      <div class="cut" data-fit="contain" data-shape="3" style="--tilt:2.2deg;--d:70ms"><img src="../assets/img/city-08.webp" alt="" loading="lazy" decoding="async"></div>
+      <figcaption><span data-t="en">Act III — Without scale</span><span data-t="ru">Акт III — Без масштаба</span></figcaption>
+    </figure>
+    <figure class="cut-item">
+      <div class="cut" data-fit="contain" data-shape="4" style="--tilt:-1.4deg;--d:140ms"><img src="../assets/img/city-09.webp" alt="" loading="lazy" decoding="async"></div>
+      <figcaption><span data-t="en">Act III — Without scale</span><span data-t="ru">Акт III — Без масштаба</span></figcaption>
+    </figure>
+    <figure class="cut-item">
+      <div class="cut" data-fit="contain" data-shape="5" style="--tilt:3.1deg;--d:210ms"><img src="../assets/img/city-10.webp" alt="" loading="lazy" decoding="async"></div>
+      <figcaption><span data-t="en">Act III — Without scale</span><span data-t="ru">Акт III — Без масштаба</span></figcaption>
+    </figure>
+    <figure class="cut-item">
+      <div class="cut" data-fit="contain" data-shape="1" style="--tilt:-2.6deg;--d:280ms"><img src="../assets/img/city-11.webp" alt="" loading="lazy" decoding="async"></div>
+      <figcaption><span data-t="en">Act III — Without scale</span><span data-t="ru">Акт III — Без масштаба</span></figcaption>
+    </figure>
   </div>
   <div class="next">
     <a href="synesthetic-rain.html">
@@ -102,6 +135,6 @@
 </div>
 </div>
 </main>
-<script src="../assets/js/site.js" defer></script>
+<script src="../assets/js/site.js?v=ce0b7900" defer></script>
 </body>
 </html>

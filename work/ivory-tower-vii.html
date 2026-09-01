@@ -14,14 +14,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/site.css">
-<script src="../assets/js/bg.js" defer></script>
+<link rel="stylesheet" href="../assets/css/site.css?v=f480b6ed">
+<script>document.documentElement.classList.add('js')</script>
+<script src="../assets/js/bg.js?v=22881426" defer></script>
 </head>
 <body>
 <video id="bgv" aria-hidden="true" tabindex="-1" autoplay muted loop playsinline
-       preload="auto" poster="../assets/video/smoke-poster.jpg">
-  <source src="../assets/video/smoke.webm" type="video/webm">
-  <source src="../assets/video/smoke.mp4" type="video/mp4">
+       preload="auto" poster="../assets/video/portrait-poster.jpg">
+  <source src="../assets/video/portrait.webm" type="video/webm">
+  <source src="../assets/video/portrait.mp4" type="video/mp4">
 </video>
 <canvas id="bg" aria-hidden="true"></canvas>
 <div id="veil" aria-hidden="true"></div>
@@ -38,12 +39,12 @@
 </header>
 <main>
 <section class="hero" data-fit="cover">
-  <div class="slide-bg"><img src="../assets/img/ivory.jpg" alt="" fetchpriority="high" decoding="async"></div>
   <div class="cap">
     <p class="kicker"><span data-t="en">Sound laboratory</span><span data-t="ru">Звуковая лаборатория</span></p>
     <h1><span data-t="en">Ivory Tower VII</span><span data-t="ru">Башня из слоновой кости VII</span></h1>
     <p class="sub"><span data-t="en">Sound production in sonic improvisation with experimental instruments from Dom Radio.</span><span data-t="ru">Звуковое производство в звуковой импровизации на экспериментальных инструментах Дома радио.</span></p>
   </div>
+  <div class="cut" data-fit="cover" data-shape="4" style="--tilt:-1.4deg;--d:140ms"><img src="../assets/img/ivory.jpg" alt="" fetchpriority="high" decoding="async"></div>
 </section>
 
 <div class="wrap">
@@ -65,7 +66,9 @@
   </div>
   <p class="section-label"><span data-t="en">Images</span><span data-t="ru">Изображения</span></p>
   <div class="grid">
-    <figure data-fit="cover"><img src="../assets/img/cables.jpg" alt="" loading="lazy" decoding="async"></figure>
+    <figure class="cut-item">
+      <div class="cut" data-fit="cover" data-shape="2" style="--tilt:2.6deg;--d:70ms"><img src="../assets/img/cables.jpg" alt="" loading="lazy" decoding="async"></div>
+    </figure>
   </div>
   <div class="next">
     <a href="city-15741.html">
@@ -79,6 +82,6 @@
 </div>
 </div>
 </main>
-<script src="../assets/js/site.js" defer></script>
+<script src="../assets/js/site.js?v=ce0b7900" defer></script>
 </body>
 </html>

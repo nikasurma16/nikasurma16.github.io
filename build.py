@@ -6,6 +6,7 @@ All copy lives in this file. Run `python build.py` to regenerate
 index.html, about.html and work/*.html. No dependencies.
 """
 
+import hashlib
 import io
 import os
 import re
@@ -23,6 +24,17 @@ TELEGRAM = ""         # e.g. "https://t.me/username"
 # helpers
 # --------------------------------------------------------------------------
 
+def asset(path):
+    """Stamp a stylesheet or script with a content hash so an edit is never
+    served from a stale cache."""
+    try:
+        with open(os.path.join(ROOT, path), "rb") as f:
+            h = hashlib.md5(f.read()).hexdigest()[:8]
+    except OSError:
+        return path
+    return "%s?v=%s" % (path, h)
+
+
 def t(en, ru, tag="span", cls=None):
     """A fragment that exists in both languages; CSS reveals one."""
     c = ' class="%s"' % cls if cls else ""
@@ -30,7 +42,24 @@ def t(en, ru, tag="span", cls=None):
             .format(tag, c, en, ru))
 
 
-def head(title, desc, prefix, og_image, bg="smoke"):
+# Cutouts are pinned at fixed angles rather than random ones so the page
+# looks the same on every build.
+TILTS = [-3.4, 2.6, -1.9, 3.9, -2.8, 1.7, -4.2, 2.2, -1.4, 3.1, -2.6, 1.2]
+
+
+def cut(i, src, prefix, fit="cover", eager=False, klass=""):
+    """One scissor-cut photograph."""
+    return ('<div class="cut{k}" data-fit="{fit}" data-shape="{shape}" '
+            'style="--tilt:{tilt}deg;--d:{delay}ms">'
+            '<img src="{p}assets/img/{src}" alt=""{load} decoding="async">'
+            '</div>').format(
+        k=(" " + klass) if klass else "",
+        fit=fit, shape=(i % 5) + 1, tilt=TILTS[i % len(TILTS)],
+        delay=(i % 6) * 70, p=prefix, src=src,
+        load=' fetchpriority="high"' if eager else ' loading="lazy"')
+
+
+def head(title, desc, prefix, og_image, bg="portrait"):
     return """<!doctype html>
 <html lang="en">
 <head>
@@ -47,8 +76,9 @@ def head(title, desc, prefix, og_image, bg="smoke"):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{p}assets/css/site.css">
-<script src="{p}assets/js/bg.js" defer></script>
+<link rel="stylesheet" href="{p}{css}">
+<script>document.documentElement.classList.add('js')</script>
+<script src="{p}{bgjs}" defer></script>
 </head>
 <body{body_class}>
 <video id="bgv" aria-hidden="true" tabindex="-1" autoplay muted loop playsinline
@@ -59,6 +89,7 @@ def head(title, desc, prefix, og_image, bg="smoke"):
 <canvas id="bg" aria-hidden="true"></canvas>
 <div id="veil" aria-hidden="true"></div>
 """.format(title=title, desc=desc, p=prefix, site=SITE_URL, og=og_image, bg=bg,
+           css=asset("assets/css/site.css"), bgjs=asset("assets/js/bg.js"),
            body_class="{BODY_CLASS}")
 
 
@@ -131,6 +162,11 @@ WORKS = [
     "Ника Сурма, Майк Ив, Павел Гордеев"),
  ],
  "body_en": [
+   "What happens to a city if its principal function changes? The first cities arose from people’s "
+   "need to come together, to exchange knowledge and to make what is impossible alone. If a human "
+   "being stops being the condition on which a city exists, does its infrastructure change — does it "
+   "remain at all? The city of the future may be the first one built by people and no longer "
+   "dependent on them.",
    "City 15741 has no narrative. There are no people in it, no traces of people, and no moment "
    "at which they left. The city is shown afterwards — but “afterwards” is not offered as loss, "
    "because there is nothing to lose: the space does not remember what came before.",
@@ -147,6 +183,11 @@ WORKS = [
    "a moving object would be an event, and there are no events.",
  ],
  "body_ru": [
+   "Что произойдёт с городом, если его основная функция изменится? Первые города возникли "
+   "из потребности людей объединяться, обмениваться знаниями и создавать то, что невозможно "
+   "в одиночку. Если человек перестанет быть главным условием существования города, изменятся "
+   "ли его инфраструктура, останется ли она? Город будущего может стать первым созданным "
+   "человеком, но больше не зависящим от него.",
    "В фильме нет повествования. Нет людей, нет их следов, нет момента, когда они ушли. "
    "Город показан уже после — но «после» не подаётся как утрата, потому что нечего терять: "
    "пространство не помнит, что было до.",
@@ -583,19 +624,18 @@ def render_index():
     slides = []
     dots = []
     for i, w in enumerate(WORKS):
-        eager = ' loading="eager" fetchpriority="high"' if i == 0 else ' loading="lazy"'
         slides.append("""  <section class="slide" data-fit="{fit}" id="s{n}">
-    <div class="slide-bg"><img src="assets/img/{cover}" alt=""{eager} decoding="async"></div>
-    <a class="hit" href="work/{slug}.html" aria-label="{title_en}"></a>
     <div class="cap">
       <p class="kicker">{kicker}</p>
       <h2>{title}</h2>
       <p class="sub">{sub}</p>
       <span class="go">{go}</span>
     </div>
+    {cutout}
+    <a class="hit" href="work/{slug}.html" aria-label="{title_en}"></a>
   </section>""".format(
-            fit=w["fit"], n=i + 1, cover=w["cover"], eager=eager, slug=w["slug"],
-            title_en=w["title_en"],
+            fit=w["fit"], n=i + 1, slug=w["slug"], title_en=w["title_en"],
+            cutout=cut(i, w["cover"], "", w["fit"], eager=(i == 0)),
             kicker=t(w["kicker_en"], w["kicker_ru"]),
             title=t(w["title_en"], w["title_ru"]),
             sub=t(w["sub_en"], w["sub_ru"]),
@@ -615,7 +655,8 @@ def render_index():
     html += '<nav class="pager" aria-label="Projects">\n' + "\n".join(dots) + "\n</nav>\n"
     html += '<p class="hint">{}</p>\n'.format(
         t("scroll", "скролл"))
-    html += '<script src="assets/js/site.js" defer></script>\n</body>\n</html>\n'
+    html += ('<script src="%s" defer></script>\n</body>\n</html>\n'
+             % asset("assets/js/site.js"))
     write("index.html", html)
 
 
@@ -635,13 +676,12 @@ def render_work(i, w):
     gallery = ""
     if w["gallery"]:
         figs = []
-        for src, fit, cap_en, cap_ru in w["gallery"]:
+        for j, (src, fit, cap_en, cap_ru) in enumerate(w["gallery"]):
             cap = ""
             if cap_en or cap_ru:
-                cap = "<figcaption>%s</figcaption>" % t(cap_en, cap_ru)
-            figs.append('    <figure data-fit="{fit}"><img src="../assets/img/{src}" '
-                        'alt="" loading="lazy" decoding="async">{cap}</figure>'
-                        .format(fit=fit, src=src, cap=cap))
+                cap = "\n      <figcaption>%s</figcaption>" % t(cap_en, cap_ru)
+            figs.append('    <figure class="cut-item">\n      %s%s\n    </figure>'
+                        % (cut(j + 1, src, "../", fit), cap))
         gallery = ('  <p class="section-label">%s</p>\n  <div class="grid">\n%s\n  </div>\n'
                    % (t("Images", "Изображения"),
                       "\n".join(figs)))
@@ -653,12 +693,12 @@ def render_work(i, w):
     html += header("../", "work")
     html += """<main>
 <section class="hero" data-fit="{fit}">
-  <div class="slide-bg"><img src="../assets/img/{cover}" alt="" fetchpriority="high" decoding="async"></div>
   <div class="cap">
     <p class="kicker">{kicker}</p>
     <h1>{title}</h1>
     <p class="sub">{sub}</p>
   </div>
+  {cutout}
 </section>
 
 <div class="wrap">
@@ -680,10 +720,11 @@ def render_work(i, w):
   </div>
 {footer}</div>
 </main>
-<script src="../assets/js/site.js" defer></script>
+<script src="../{sitejs}" defer></script>
 </body>
 </html>
-""".format(fit=w["fit"], cover=w["cover"],
+""".format(fit=w["fit"],
+           cutout=cut(i, w["cover"], "../", w["fit"], eager=True),
            kicker=t(w["kicker_en"], w["kicker_ru"]),
            title=t(w["title_en"], w["title_ru"]),
            sub=t(w["sub_en"], w["sub_ru"]),
@@ -691,6 +732,7 @@ def render_work(i, w):
            nslug=nxt["slug"],
            nextlbl=t("Next project", "Следующий проект"),
            ntitle=t(nxt["title_en"], nxt["title_ru"]),
+           sitejs=asset('assets/js/site.js'),
            footer=footer("../"))
     write("work/%s.html" % w["slug"], html)
 
@@ -728,7 +770,9 @@ def render_about():
 <div class="wrap about-top">
   <div class="cols">
     <div class="portrait">
-      <img src="assets/img/portrait.jpg" alt="{alt}" loading="eager" decoding="async">
+      <div class="cut" data-shape="2" style="--tilt:-2.4deg">
+        <img src="assets/img/portrait.jpg" alt="{alt}" fetchpriority="high" decoding="async">
+      </div>
     </div>
     <div>
       <h1>{name}</h1>
@@ -748,7 +792,7 @@ def render_about():
   </div>
 {footer}</div>
 </main>
-<script src="assets/js/site.js" defer></script>
+<script src="{sitejs}" defer></script>
 </body>
 </html>
 """.format(alt=NAME, name=NAME,
@@ -758,6 +802,7 @@ def render_about():
            rows="\n".join(rows),
            contact_lbl=t("Contact", "Контакты"),
            contact=contact_html,
+           sitejs=asset('assets/js/site.js'),
            footer=footer(""))
     write("about.html", html)
 

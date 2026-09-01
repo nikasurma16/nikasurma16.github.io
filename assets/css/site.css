@@ -119,30 +119,24 @@ body.deck-page{overflow:hidden}
 
 .slide{
   position:relative;height:100dvh;scroll-snap-align:start;
-  display:flex;align-items:center;
-}
-.slide-bg{position:absolute;inset:0;overflow:hidden}
-.slide-bg img{width:100%;height:100%;object-fit:cover;object-position:center}
-.slide[data-fit="contain"] .slide-bg img,
-.hero[data-fit="contain"] .slide-bg img{object-fit:contain}
-
-/* A contained fisheye frame is a circle on black: slide it clear of the
-   caption on wide screens instead of letting the type sit on the image. */
-@media (min-width:1000px){
-  .slide[data-fit="contain"] .slide-bg img,
-  .hero[data-fit="contain"] .slide-bg img{object-position:64% center}
+  display:flex;align-items:center;justify-content:space-between;
+  gap:clamp(16px,4vw,64px);
+  padding:calc(var(--hdr) + 8px) var(--pad) 72px;
 }
 .slide::after{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:
-    linear-gradient(100deg,rgba(6,6,7,.86) 0%,rgba(6,6,7,.55) 34%,rgba(6,6,7,0) 66%),
-    linear-gradient(to top,rgba(6,6,7,.78) 0%,rgba(6,6,7,0) 34%);
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:linear-gradient(100deg,rgba(6,6,8,.80) 0%,rgba(6,6,8,.42) 40%,rgba(6,6,8,0) 74%);
 }
 
 .slide .cap{
   position:relative;z-index:3;
-  padding:0 var(--pad);
-  max-width:min(820px,68vw);
+  flex:1 1 44%;max-width:min(620px,48vw);
+}
+.slide .cut{flex:0 0 auto;z-index:2}
+.slide .cut img{
+  width:auto;height:auto;
+  max-width:min(50vw,800px);
+  max-height:min(70vh,740px);
 }
 .kicker{
   font-family:var(--mono);font-size:10px;letter-spacing:.24em;
@@ -163,8 +157,51 @@ body.deck-page{overflow:hidden}
   color:var(--dim);border-bottom:1px solid var(--line);padding-bottom:4px;
   transition:color .25s,border-color .25s;
 }
-.slide a.hit{position:absolute;inset:0;z-index:2}
+.slide a.hit{position:absolute;inset:0;z-index:5}
 .slide:hover .go{color:var(--fg);border-color:var(--fg)}
+
+/* ---- paper cutouts ------------------------------------------------- */
+/* Work documentation is pasted onto the page as scissor-cut paper:
+   a light margin under the photograph, an irregular edge, a hard shadow,
+   and a spring as each one lands. Dome frames are already cut round, so
+   they get the shadow and the spring but no paper behind them.          */
+
+.cut{
+  position:relative;margin:0;display:block;--tilt:0deg;
+  background:#efece4;
+  padding:clamp(6px,.85vw,15px);
+  transform:rotate(var(--tilt));
+  filter:drop-shadow(0 16px 22px rgba(0,0,0,.55)) drop-shadow(0 3px 4px rgba(0,0,0,.45));
+  transition:filter .45s ease;
+}
+.cut img{display:block}
+.cut[data-fit="contain"]{background:none;padding:0;clip-path:none}
+
+.cut[data-shape="1"]{clip-path:polygon(0.0% 1.4%,20.0% 0.2%,40.0% 1.4%,60.0% 3.1%,80.0% 2.6%,100.0% 1.3%,98.3% 20.0%,98.6% 40.0%,98.1% 60.0%,98.1% 80.0%,97.4% 100.0%,80.0% 96.9%,60.0% 99.8%,40.0% 98.7%,20.0% 99.7%,0.0% 97.2%,2.4% 80.0%,1.9% 60.0%,3.2% 40.0%,2.4% 20.0%)}
+.cut[data-shape="2"]{clip-path:polygon(0.0% 0.4%,20.0% 1.7%,40.0% 1.7%,60.0% 2.9%,80.0% 0.3%,100.0% 0.8%,98.0% 20.0%,98.1% 40.0%,97.3% 60.0%,98.1% 80.0%,97.5% 100.0%,80.0% 97.4%,60.0% 97.4%,40.0% 98.0%,20.0% 99.2%,0.0% 97.9%,0.4% 80.0%,2.8% 60.0%,1.5% 40.0%,2.8% 20.0%)}
+.cut[data-shape="3"]{clip-path:polygon(0.0% 3.2%,20.0% 2.3%,40.0% 1.8%,60.0% 3.2%,80.0% 2.4%,100.0% 2.4%,98.1% 20.0%,99.1% 40.0%,98.0% 60.0%,97.8% 80.0%,98.0% 100.0%,80.0% 97.4%,60.0% 96.8%,40.0% 96.8%,20.0% 97.0%,0.0% 98.9%,2.0% 80.0%,1.0% 60.0%,1.8% 40.0%,3.0% 20.0%)}
+.cut[data-shape="4"]{clip-path:polygon(0.0% 3.2%,20.0% 1.1%,40.0% 1.4%,60.0% 1.8%,80.0% 0.1%,100.0% 0.2%,98.1% 20.0%,99.7% 40.0%,97.5% 60.0%,98.2% 80.0%,97.3% 100.0%,80.0% 96.6%,60.0% 97.7%,40.0% 97.4%,20.0% 100.0%,0.0% 99.3%,0.8% 80.0%,2.7% 60.0%,0.7% 40.0%,0.0% 20.0%)}
+.cut[data-shape="5"]{clip-path:polygon(0.0% 2.1%,20.0% 0.9%,40.0% 0.7%,60.0% 0.6%,80.0% 0.8%,100.0% 3.1%,99.4% 20.0%,99.0% 40.0%,97.8% 60.0%,98.0% 80.0%,99.2% 100.0%,80.0% 98.2%,60.0% 99.9%,40.0% 98.9%,20.0% 99.3%,0.0% 97.4%,2.8% 80.0%,3.4% 60.0%,3.2% 40.0%,3.0% 20.0%)}
+
+/* Nothing is hidden at rest. The spring is added when a cutout lands, so a
+   browser that never runs the animation still shows every photograph. */
+html.js .cut.in{
+  animation:cut-pop .58s cubic-bezier(.18,1.32,.32,1) backwards;
+  animation-delay:var(--d,0ms);
+}
+@keyframes cut-pop{
+  0%  {opacity:0;transform:rotate(calc(var(--tilt) * 3.2)) scale(.68)}
+  55% {opacity:1}
+  100%{opacity:1;transform:rotate(var(--tilt)) scale(1)}
+}
+@media (prefers-reduced-motion:reduce){
+  html.js .cut.in{animation:none}
+}
+
+.slide:hover .cut,
+.cut-item:hover .cut{
+  filter:drop-shadow(0 28px 36px rgba(0,0,0,.6)) drop-shadow(0 4px 6px rgba(0,0,0,.5));
+}
 
 /* ---- pager -------------------------------------------------------- */
 
@@ -184,14 +221,22 @@ body.deck-page{overflow:hidden}
 /* ---- interior pages ----------------------------------------------- */
 
 .hero{
-  position:relative;height:min(78vh,760px);min-height:380px;
-  display:flex;align-items:flex-end;
+  position:relative;min-height:min(88vh,880px);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:clamp(16px,4vw,64px);
+  padding:calc(var(--hdr) + clamp(28px,6vh,70px)) var(--pad) clamp(28px,6vh,70px);
 }
 .hero::after{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(to top,rgba(6,6,7,.9) 0%,rgba(6,6,7,.1) 46%,rgba(6,6,7,.4) 100%);
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:linear-gradient(100deg,rgba(6,6,8,.78) 0%,rgba(6,6,8,.40) 40%,rgba(6,6,8,0) 74%);
 }
-.hero .cap{position:relative;z-index:3;padding:0 var(--pad) clamp(30px,5vh,58px);max-width:min(940px,86vw)}
+.hero .cap{position:relative;z-index:3;flex:1 1 46%;max-width:min(640px,50vw)}
+.hero .cut{flex:0 0 auto;z-index:2}
+.hero .cut img{
+  width:auto;height:auto;
+  max-width:min(46vw,720px);
+  max-height:min(64vh,680px);
+}
 .hero h1{
   margin:.5em 0 .34em;font-weight:200;font-size:clamp(28px,5vw,66px);line-height:1.04;
   letter-spacing:.004em;text-transform:uppercase;
@@ -236,16 +281,16 @@ body.deck-page{overflow:hidden}
 /* ---- galleries ---------------------------------------------------- */
 
 .grid{
-  display:grid;gap:8px;padding-bottom:clamp(40px,6vw,84px);
-  grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));
+  display:grid;gap:clamp(24px,3.6vw,56px);
+  padding-bottom:clamp(54px,7vw,104px);
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));
+  align-items:start;
 }
-.grid figure{margin:0}
-.grid figure[data-fit="cover"]{background:#000}
-.grid img{width:100%;height:100%;object-fit:cover;aspect-ratio:1/1}
-.grid figure[data-fit="contain"] img{object-fit:contain}
+.cut-item{margin:0}
+.grid .cut img{width:100%;height:auto}
 .grid figcaption{
   font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--faint);
-  padding:8px 2px 0;
+  padding:14px 2px 0;
 }
 
 /* ---- next / footer ------------------------------------------------ */
@@ -274,7 +319,7 @@ body.deck-page{overflow:hidden}
   text-transform:uppercase;letter-spacing:.004em;
 }
 .portrait{padding-top:6px}
-.portrait img{width:100%;filter:grayscale(1) contrast(1.04)}
+.portrait .cut img{width:100%;filter:grayscale(1) contrast(1.04)}
 
 .cv{font-family:var(--mono);font-size:11.5px;line-height:1.75;letter-spacing:.015em}
 .cv .row{
@@ -297,18 +342,22 @@ body.deck-page{overflow:hidden}
   font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--faint);pointer-events:none;
 }
-@media (max-width:700px){
+@media (max-width:760px){
   .hint{display:none}
   .pager{gap:10px;font-size:10px;right:var(--pad)}
 
-  /* Portrait screens: lift the image clear of the caption and read the
-     type off a bottom scrim instead of off the picture. */
-  .slide{align-items:flex-end}
-  .slide .cap{max-width:100%;padding-bottom:74px}
-  .slide[data-fit="contain"] .slide-bg img,
-  .hero[data-fit="contain"] .slide-bg img{object-position:center 24%}
-  .slide::after{
-    background:linear-gradient(to top,rgba(6,6,7,.93) 0%,rgba(6,6,7,.62) 40%,rgba(6,6,7,.12) 100%);
+  /* Portrait screens: the cutout sits above the type rather than beside it. */
+  .slide,.hero{
+    flex-direction:column-reverse;justify-content:center;
+    gap:clamp(16px,3.4vh,32px);
+  }
+  .slide{padding-bottom:66px}
+  .hero{min-height:auto;padding-top:calc(var(--hdr) + 34px)}
+  .slide .cap,.hero .cap{flex:0 0 auto;max-width:100%}
+  .slide .cut img{max-width:84vw;max-height:40vh}
+  .hero .cut img{max-width:84vw;max-height:44vh}
+  .slide::after,.hero::after{
+    background:linear-gradient(to top,rgba(6,6,8,.88) 0%,rgba(6,6,8,.5) 46%,rgba(6,6,8,.12) 100%);
   }
 }
 

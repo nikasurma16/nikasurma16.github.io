@@ -35,6 +35,55 @@
     remember(b.dataset.lang);
   });
 
+  /* ---- paper cutouts ----------------------------------------------- */
+  /* Each cutout springs into place the first time it comes into view. */
+
+  /* Measured against the viewport rather than observed: the stylesheet
+     hides a cutout until it has landed, so this must not be able to fail
+     quietly. A timer lands whatever is left, whatever happened. */
+
+  var waiting = Array.prototype.slice.call(document.querySelectorAll('.cut'));
+
+  function land(el) { el.classList.add('in'); }
+
+  function sweep() {
+    var h = window.innerHeight || 800;
+    waiting = waiting.filter(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.height === 0) return true;
+      if (r.top < h * 0.94 && r.bottom > h * 0.06) { land(el); return false; }
+      return true;
+    });
+  }
+
+  /* Throttled on a timer, not on requestAnimationFrame: embedded and
+     background views can park the rendering loop indefinitely, and a
+     cutout that never lands is a cutout nobody sees. */
+  var timer = 0;
+  function scheduleSweep() {
+    if (timer || !waiting.length) return;
+    timer = setTimeout(function () { timer = 0; sweep(); }, 80);
+  }
+
+  /* A photograph has no height until it has decoded, so sweep again as
+     each one arrives rather than guessing at fixed delays. */
+  waiting.forEach(function (el) {
+    var img = el.querySelector('img');
+    if (img && !img.complete) {
+      img.addEventListener('load', scheduleSweep, { once: true });
+      img.addEventListener('error', scheduleSweep, { once: true });
+    }
+  });
+
+  sweep();
+  window.addEventListener('scroll', scheduleSweep, { passive: true });
+  window.addEventListener('resize', scheduleSweep);
+  window.addEventListener('load', sweep);
+  document.addEventListener('scroll', scheduleSweep, { passive: true, capture: true });
+  setTimeout(sweep, 250);
+  setTimeout(sweep, 900);
+  setTimeout(function () { waiting.splice(0).forEach(land); }, 3000);
+
   /* ---- slide deck -------------------------------------------------- */
 
   var deck = document.querySelector('.deck');
