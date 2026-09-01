@@ -18,6 +18,7 @@ NAME = "nika sür-mä"
 # Change this line and rebuild to publish a contact address.
 EMAIL = ""            # e.g. "hello@example.com"
 TELEGRAM = ""         # e.g. "https://t.me/username"
+INSTAGRAM = "https://www.instagram.com/nika_sur_ma/"
 
 
 # --------------------------------------------------------------------------
@@ -72,7 +73,7 @@ def bg_sources(bg, prefix):
                    % (prefix, bg, ext, mime) for _, ext, mime in found)
 
 
-def head(title, desc, prefix, og_image, bg="portrait"):
+def head(title, desc, prefix, og_image, bg="portrait", grain=0):
     return """<!doctype html>
 <html lang="en">
 <head>
@@ -95,12 +96,12 @@ def head(title, desc, prefix, og_image, bg="portrait"):
 </head>
 <body{body_class}>
 <video id="bgv" aria-hidden="true" tabindex="-1" autoplay muted loop playsinline
-       preload="auto" poster="{p}assets/video/{bg}-poster.jpg">
+       preload="auto" data-grain="{grain}" poster="{p}assets/video/{bg}-poster.jpg">
 {sources}</video>
 <canvas id="bg" aria-hidden="true"></canvas>
 <div id="veil" aria-hidden="true"></div>
 """.format(title=title, desc=desc, p=prefix, site=SITE_URL, og=og_image, bg=bg,
-           sources=bg_sources(bg, prefix),
+           grain=grain, sources=bg_sources(bg, prefix),
            css=asset("assets/css/site.css"), bgjs=asset("assets/js/bg.js"),
            body_class="{BODY_CLASS}")
 
@@ -331,7 +332,7 @@ WORKS = [
            "Glitching Environments, group exhibition, AIR ITMO, 2026.",
  "sub_ru": "Глитч как автономное присутствие внутри цифровой среды. "
            "«Сбоящие среды», групповая выставка, AIR ITMO, 2026.",
- "cover": "cage-01.jpg", "fit": "cover", "bg": "cage",
+ "cover": "cage-poster.jpg", "fit": "cover", "bg": "cage", "grain": 0.1,
  "meta": [
    ("Year", "Год", "2026", "2026"),
    ("Exhibition", "Выставка",
@@ -369,9 +370,7 @@ WORKS = [
    "Визуальный язык — глитч-текстуры, прозрачность, рекурсивные формы и эхо-следы — "
    "делает поведение ошибки осязаемым.",
  ],
- "gallery": [
-   ("cage-poster.jpg", "cover", "Exhibition poster", "Постер выставки"),
- ],
+ "gallery": [],
 },
 {
  "slug": "addoor-error",
@@ -453,59 +452,6 @@ WORKS = [
    "точке пространства.",
  ],
  "gallery": [],
-},
-{
- "slug": "touch-me-maybe",
- "kicker_en": "Art & science", "kicker_ru": "Art & science",
- "title_en": "Touch Me {Maybe}", "title_ru": "Touch Me {Maybe}",
- "sub_en": "A virtual haptic-audio system based on the neuroscience of multisensory integration. "
-           "nika sür-mä × Lera Juffer, AIR ITMO, 2025.",
- "sub_ru": "Виртуальная гаптическо-звуковая система, основанная на нейронауке мультисенсорной "
-           "интеграции. nika sür-mä × Lera Juffer, AIR ITMO, 2025.",
- "cover": "touch-01.jpg", "fit": "cover",
- "meta": [
-   ("Year", "Год", "2025", "2025"),
-   ("Authors", "Авторы", "nika sür-mä × Lera Juffer", "nika sür-mä × Lera Juffer"),
-   ("Context", "Контекст", "AIR, ITMO", "AIR, ИТМО"),
-   ("Tools", "Инструменты",
-    "MAX/MSP, TouchDesigner (real-time)",
-    "MAX/MSP, TouchDesigner (реалтайм)"),
- ],
- "body_en": [
-   "Touch Me {Maybe} uses the neuroscientific principles of multisensory integration to create an "
-   "interactive digital space where virtual touch and sound merge into a seamless, unified sensory experience.",
-   "<strong>System architecture.</strong>",
-   "<ul>"
-   "<li><strong>Input</strong> — gesture: position, speed, type.</li>"
-   "<li><strong>Reliability assessment</strong> — the system analyses the smoothness and consistency of movement.</li>"
-   "<li><strong>Processing</strong> — it evaluates synchrony, reliability and user history.</li>"
-   "<li><strong>Output</strong> — adaptive sound synthesis across five gesture-based channels in MAX/MSP, "
-   "with a real-time representation in TouchDesigner.</li>"
-   "</ul>",
-   "The goal is a realistic feedback loop between movement and sound. Touch Me {Maybe} is not just an "
-   "audiovisual tool but an experimental model of how the brain learns to bind action and sound into a "
-   "single stream of perception — a concept that could also inspire a new way of training AI-based agents.",
- ],
- "body_ru": [
-   "Touch Me {Maybe} использует нейронаучные принципы мультисенсорной интеграции, чтобы создать "
-   "интерактивное цифровое пространство, где виртуальное прикосновение и звук сливаются "
-   "в единый сенсорный опыт.",
-   "<strong>Архитектура системы.</strong>",
-   "<ul>"
-   "<li><strong>Вход</strong> — жест: положение, скорость, тип.</li>"
-   "<li><strong>Оценка надёжности</strong> — система анализирует плавность и согласованность движения.</li>"
-   "<li><strong>Обработка</strong> — оцениваются синхронность, надёжность и история пользователя.</li>"
-   "<li><strong>Выход</strong> — адаптивный синтез звука по пяти жестовым каналам в MAX/MSP "
-   "и реалтайм-репрезентация в TouchDesigner.</li>"
-   "</ul>",
-   "Цель — реалистичная петля обратной связи между движением и звуком. Touch Me {Maybe} — "
-   "не просто аудиовизуальный инструмент, а экспериментальная модель того, как мозг учится "
-   "связывать действие и звук в единый поток восприятия — концепция, которая может "
-   "подсказать и новый способ обучения ИИ-агентов.",
- ],
- "gallery": [
-   ("touch-02.jpg", "cover", "System patch", "Патч системы"),
- ],
 },
 {
  "slug": "lez-acoustic-trace",
@@ -705,7 +651,7 @@ def render_work(i, w):
         "%s — %s" % (w["title_en"], NAME),
         re.sub("<[^>]+>", "", w["sub_en"]),
         "../", w["cover"],
-        bg=w.get("bg", "portrait")).replace(
+        bg=w.get("bg", "portrait"), grain=w.get("grain", 0)).replace(
             "{BODY_CLASS}", ' class="bg-%s"' % w.get("bg", "portrait"))
     html += header("../", "work")
     html += """<main>
@@ -787,9 +733,14 @@ def render_about():
 <div class="wrap about-top">
   <div class="cols">
     <div class="portrait">
-      <div class="cut" data-shape="2" style="--tilt:-2.4deg">
-        <img src="assets/img/portrait.jpg" alt="{alt}" fetchpriority="high" decoding="async">
-      </div>
+      <a class="cut reel" data-shape="2" style="--tilt:-2.4deg"
+         href="{instagram}" target="_blank" rel="me noopener">
+        <video autoplay muted loop playsinline preload="metadata"
+               poster="assets/video/reel-poster.jpg" aria-label="{alt}">
+          <source src="assets/video/reel.mp4" type="video/mp4">
+        </video>
+        <span class="reel-tag">instagram</span>
+      </a>
     </div>
     <div>
       <h1>{name}</h1>
@@ -812,7 +763,7 @@ def render_about():
 <script src="{sitejs}" defer></script>
 </body>
 </html>
-""".format(alt=NAME, name=NAME,
+""".format(alt=NAME, name=NAME, instagram=INSTAGRAM,
            bio_en="".join("<p>%s</p>" % p for p in BIO_EN),
            bio_ru="".join("<p>%s</p>" % p for p in BIO_RU),
            selected=t("Selected works", "Избранные работы"),
@@ -842,8 +793,22 @@ def render_extras():
     write(".nojekyll", "")
 
 
+def prune_work_pages():
+    """Drop pages for works that no longer exist, so a removed project does
+    not stay reachable by its old URL."""
+    keep = {"%s.html" % w["slug"] for w in WORKS}
+    d = os.path.join(ROOT, "work")
+    if not os.path.isdir(d):
+        return
+    for f in os.listdir(d):
+        if f.endswith(".html") and f not in keep:
+            os.remove(os.path.join(d, f))
+            print("   removed work/%s" % f)
+
+
 if __name__ == "__main__":
     print("building %s" % SITE_URL)
+    prune_work_pages()
     render_index()
     for i, w in enumerate(WORKS):
         render_work(i, w)

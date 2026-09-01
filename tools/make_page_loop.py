@@ -3,7 +3,7 @@
 Cut a seamless background loop out of a long clip.
 
     python tools/make_page_loop.py <source.mp4> <name> <start_seconds> [length]
-                                   [--upright] [--gray]
+                                   [--upright] [--gray] [--size=WxH]
 
 The loop opens on a crossfade between its own tail and its own head, so the
 repeat has no cut:
@@ -53,6 +53,10 @@ def main():
         ROTATE = False
     if "--gray" in flags:
         GRAY = True
+    for f in flags:
+        if f.startswith("--size="):
+            global WIDTH, HEIGHT
+            WIDTH, HEIGHT = (int(v) for v in f.split("=", 1)[1].split("x"))
 
     if len(args) < 3:
         print(__doc__)

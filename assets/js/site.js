@@ -35,6 +35,25 @@
     remember(b.dataset.lang);
   });
 
+  /* ---- inline video ------------------------------------------------- */
+  /* Some browsers hold even a muted autoplay until the page is touched. */
+
+  var inlineVideos = document.querySelectorAll('.cut video');
+
+  function nudge() {
+    Array.prototype.forEach.call(inlineVideos, function (v) {
+      if (!v.paused) return;
+      var p = v.play();
+      if (p && p.catch) p.catch(function () { /* poster stands in */ });
+    });
+  }
+  if (inlineVideos.length) {
+    nudge();
+    ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) {
+      window.addEventListener(ev, nudge, { passive: true });
+    });
+  }
+
   /* ---- paper cutouts ----------------------------------------------- */
   /* Each cutout springs into place the first time it comes into view. */
 
@@ -72,6 +91,11 @@
     if (img && !img.complete) {
       img.addEventListener('load', scheduleSweep, { once: true });
       img.addEventListener('error', scheduleSweep, { once: true });
+    }
+    var vid = el.querySelector('video');
+    if (vid) {
+      vid.addEventListener('loadedmetadata', scheduleSweep, { once: true });
+      vid.addEventListener('error', scheduleSweep, { once: true });
     }
   });
 

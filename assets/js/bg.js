@@ -74,6 +74,10 @@
   uniform vec2  uPointerVel;
   uniform float uAmount;     // 0..1, decays when the pointer rests
   uniform float uStrength;
+  uniform float uGrain;      // film grain, per page
+  uniform float uTime;
+
+  float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
 
   void main(){
     // cover-fit the 16:9 loop into whatever shape the window is
@@ -91,6 +95,14 @@
               + uPointerVel * fall * 0.5;
 
     vec3 col = texture(uTex, clamp(uv + warp, 0.0, 1.0)).rgb;
+
+    /* Grain is added here rather than baked into the file: it costs no
+       bitrate, and it moves every frame the way real grain does. */
+    if (uGrain > 0.0) {
+      float n = hash(gl_FragCoord.xy + fract(uTime) * 137.0) - 0.5;
+      col += n * uGrain;
+    }
+
     outColor = vec4(col, 1.0);
   }`;
 
@@ -127,8 +139,12 @@
   gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 
   var u = {};
-  ['uTex', 'uRes', 'uVid', 'uPointer', 'uPointerVel', 'uAmount', 'uStrength']
+  ['uTex', 'uRes', 'uVid', 'uPointer', 'uPointerVel', 'uAmount', 'uStrength',
+   'uGrain', 'uTime']
     .forEach(function (n) { u[n] = gl.getUniformLocation(prog, n); });
+
+  var grain = parseFloat(video.dataset.grain || '0') || 0;
+  var started = performance.now();
 
   var tex = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, tex);
@@ -200,6 +216,8 @@
     gl.uniform2fv(u.uPointerVel, vel);
     gl.uniform1f(u.uAmount, amount);
     gl.uniform1f(u.uStrength, STRENGTH);
+    gl.uniform1f(u.uGrain, grain);
+    gl.uniform1f(u.uTime, (performance.now() - started) / 1000);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
 
