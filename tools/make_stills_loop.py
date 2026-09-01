@@ -29,12 +29,15 @@ FPS = 25
 SECONDS_PER_IMAGE = 8.0
 ZOOM = 0.06          # how far each photograph breathes
 CONTRAST = 1.12
+ROTATE = True        # upside down
 
 
 def prepare(path):
     """Monochrome, contrast-lifted, cropped to fill the frame with room to zoom."""
     im = Image.open(path)
     im = ImageOps.exif_transpose(im).convert("L")
+    if ROTATE:
+        im = im.rotate(180)
     im = ImageEnhance.Contrast(im).enhance(CONTRAST)
     big = (int(WIDTH * (1 + ZOOM * 2)), int(HEIGHT * (1 + ZOOM * 2)))
     return ImageOps.fit(im, big, Image.LANCZOS, centering=(0.5, 0.5)).convert("RGB")

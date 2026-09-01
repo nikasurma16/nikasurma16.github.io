@@ -644,7 +644,8 @@ def render_work(i, w):
             if cap_en or cap_ru:
                 cap = "\n      <figcaption>%s</figcaption>" % t(cap_en, cap_ru)
             figs.append('    <figure class="cut-item">\n      %s%s\n    </figure>'
-                        % (cut(j + 1, src, "../", fit), cap))
+                        % (cut(j + 1, src, "../", fit,
+                               flip=w.get("flip", False)), cap))
         gallery = ('  <p class="section-label">%s</p>\n  <div class="grid">\n%s\n  </div>\n'
                    % (t("Images", "Изображения"),
                       "\n".join(figs)))
