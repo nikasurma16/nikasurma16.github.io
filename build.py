@@ -12,7 +12,7 @@ import re
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE_URL = "https://nika-sur-ma.github.io"
-NAME = "nika sŭr-mã"
+NAME = "nika sür-mä"
 
 # Change this line and rebuild to publish a contact address.
 EMAIL = ""            # e.g. "hello@example.com"
@@ -127,7 +127,7 @@ WORKS = [
     "Фулдоум, fisheye 180°, 4096×4096, 30 к/с"),
    ("Duration", "Хронометраж", "4 min", "4 мин"),
    ("Authors", "Авторы",
-    "nika sŭr-mã, Mike Iv, Pavel Gordeev",
+    "nika sür-mä, Mike Iv, Pavel Gordeev",
     "Ника Сурма, Майк Ив, Павел Гордеев"),
  ],
  "body_en": [
@@ -200,7 +200,7 @@ WORKS = [
    "A fantasy on the theme of synesthetic flow, including the representation of "
    "V. V. Kandinsky’s <em>Composition VI</em> and <em>Composition VII</em> as treasures "
    "of twentieth-century culture.",
-   "nika sŭr-mã, in tandem with AI, paints an endless synesthetic rain — a symbol of eternal "
+   "nika sür-mä, in tandem with AI, paints an endless synesthetic rain — a symbol of eternal "
    "flow through the flood, toward restoration through destruction.",
  ],
  "body_ru": [
@@ -230,9 +230,9 @@ WORKS = [
     "Media artist, sound design — music and animation",
     "Медиахудожница, саунд-дизайн — музыка и анимация"),
    ("Team", "Команда",
-    "Mikhail Patlasov (director), Mike Iv, nika sŭr-mã, Angelina Lakeeva, "
+    "Mikhail Patlasov (director), Mike Iv, nika sür-mä, Angelina Lakeeva, "
     "Alina Shklyarskaya (text), Egor Shcherbak",
-    "Михаил Патласов (режиссёр), Mike Iv, nika sŭr-mã, Ангелина Лакеева, "
+    "Михаил Патласов (режиссёр), Mike Iv, nika sür-mä, Ангелина Лакеева, "
     "Алина Шклярская (текст), Егор Щербак"),
    ("Support", "Поддержка",
     "New Media Laboratory (Meyerhold New Stage, Alexandrinsky Theatre); "
@@ -403,13 +403,13 @@ WORKS = [
  "kicker_en": "Art & science", "kicker_ru": "Art & science",
  "title_en": "Touch Me {Maybe}", "title_ru": "Touch Me {Maybe}",
  "sub_en": "A virtual haptic-audio system based on the neuroscience of multisensory integration. "
-           "nika sŭr-mã × Lera Juffer, AIR ITMO, 2025.",
+           "nika sür-mä × Lera Juffer, AIR ITMO, 2025.",
  "sub_ru": "Виртуальная гаптическо-звуковая система, основанная на нейронауке мультисенсорной "
-           "интеграции. nika sŭr-mã × Lera Juffer, AIR ITMO, 2025.",
+           "интеграции. nika sür-mä × Lera Juffer, AIR ITMO, 2025.",
  "cover": "touch-01.jpg", "fit": "cover",
  "meta": [
    ("Year", "Год", "2025", "2025"),
-   ("Authors", "Авторы", "nika sŭr-mã × Lera Juffer", "nika sŭr-mã × Lera Juffer"),
+   ("Authors", "Авторы", "nika sür-mä × Lera Juffer", "nika sür-mä × Lera Juffer"),
    ("Context", "Контекст", "AIR, ITMO", "AIR, ИТМО"),
    ("Tools", "Инструменты",
     "MAX/MSP, TouchDesigner (real-time)",
@@ -506,7 +506,7 @@ WORKS = [
     "Видеодокументация в частной коллекции"),
  ],
  "body_en": [
-   "As a participant in the laboratory, nika sŭr-mã explored sound production in sonic improvisation "
+   "As a participant in the laboratory, nika sür-mä explored sound production in sonic improvisation "
    "using experimental instruments from Dom Radio.",
  ],
  "body_ru": [
@@ -542,23 +542,26 @@ CV = [
 ]
 
 BIO_EN = [
- "nika sŭr-mã is a media and sound artist working between fulldome film, projection mapping, "
- "AR and multichannel sound installation. She builds spaces in which an error, a repetition or a "
- "trace becomes the material of the work rather than its failure.",
- "Her practice moves between generative graphics and sound synthesis: TouchDesigner and Blender for "
- "image, MAX/MSP and Ableton Live for sound, diffusion models for material that is neither "
- "photographic nor drawn. Recent work has been shown at ДЕЛЬТА’n, D/G/TAL RA/N, "
- "Night of Light in Gatchina, Dom Radio, AIR ITMO and the Krasnokholmskaya Gallery in Moscow.",
+ "Nika sür-mä is a media artist whose practice investigates agentic systems in media and their "
+ "role in transforming human perception and agency. Working with sound, generative systems, AI, "
+ "augmented reality, 3D environments, and spatial composition, she creates experimental situations "
+ "in which humans interact with autonomous and semi-autonomous processes.",
+ "Her work explores the emergence of the posthuman through the redistribution of agency between "
+ "humans, machines, algorithms, and environments. Rather than treating technology as a tool, she "
+ "approaches media systems as active participants capable of influencing perception, behavior, "
+ "and artistic production.",
 ]
 
 BIO_RU = [
- "nika sŭr-mã — медиа- и саунд-художница, работает между купольным кино, видеомэппингом, "
- "AR и многоканальной звуковой инсталляцией. Строит пространства, в которых ошибка, повтор или "
- "след становятся материалом работы, а не её сбоем.",
- "Практика движется между генеративной графикой и синтезом звука: TouchDesigner и Blender — "
- "для изображения, MAX/MSP и Ableton Live — для звука, диффузионные модели — для материала, "
- "который не является ни фотографией, ни рисунком. Последние работы показывались на ДЕЛЬТА’n, "
- "D/G/TAL RA/N, «Ночи света» в Гатчине, в Доме радио, AIR ИТМО и Краснохолмской галерее в Москве.",
+ "Nika sür-mä — медиахудожница, чья практика исследует агентные системы в медиа и их роль "
+ "в трансформации человеческого восприятия и агентности. Работая со звуком, генеративными "
+ "системами, ИИ, дополненной реальностью, 3D-средами и пространственной композицией, она "
+ "создаёт экспериментальные ситуации, в которых человек взаимодействует с автономными "
+ "и полуавтономными процессами.",
+ "Её работа исследует возникновение постчеловеческого через перераспределение агентности "
+ "между людьми, машинами, алгоритмами и средами. Вместо того чтобы относиться к технологии "
+ "как к инструменту, она рассматривает медиасистемы как активных участников, способных "
+ "влиять на восприятие, поведение и художественное производство.",
 ]
 
 
@@ -603,9 +606,9 @@ def render_index():
                             lab=w["title_en"], num=i + 1))
 
     html = head(
-        "nika sŭr-mã — media &amp; sound artist",
-        "Fulldome film, projection mapping, AR and multichannel sound. "
-        "Winner of the «City of the Future» dome projection competition at ДЕЛЬТА’n.",
+        "nika sür-mä — media artist",
+        "Agentic systems in media and their role in transforming human perception and agency: "
+        "fulldome film, projection mapping, AR and multichannel sound.",
         "", WORKS[0]["cover"]).replace("{BODY_CLASS}", ' class="deck-page"')
     html += header("", "work")
     html += '<main class="deck">\n' + "\n".join(slides) + "\n</main>\n"
