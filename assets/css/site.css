@@ -35,23 +35,28 @@ a{color:inherit;text-decoration:none}
 
 ::selection{background:var(--fg);color:var(--bg)}
 
-/* ---- interactive background --------------------------------------- */
-/* The canvas paints a blue smoke / liquid-displacement field. The
-   gradient below it is what shows when WebGL2 is unavailable.          */
+/* ---- background ---------------------------------------------------- */
+/* The loop rendered out of the TouchDesigner patch. #bg is a WebGL copy
+   of the same footage that the cursor can displace; it only replaces the
+   video once the shader is live, so without WebGL the video just plays.  */
 
-#bg{
-  position:fixed;inset:0;z-index:0;display:block;width:100%;height:100%;
-  background:radial-gradient(122% 96% at 62% 36%,#0c2137 0%,#071120 46%,#05070b 100%);
-  --bg-intensity:1;
+#bgv,#bg{
+  position:fixed;inset:0;z-index:0;
+  width:100%;height:100%;
+  opacity:var(--bg-opacity,1);
 }
-body:not(.deck-page) #bg{--bg-intensity:.85}
+#bgv{display:block;object-fit:cover;background:#07080e}
+#bg{display:none}
+#bg.on{display:block}
+
+body:not(.deck-page){--bg-opacity:.92}
 
 #veil{
   position:fixed;inset:0;z-index:1;pointer-events:none;
-  background:rgba(10,10,11,.16);
+  background:rgba(6,7,12,.22);
 }
 body:not(.deck-page) #veil{
-  background:linear-gradient(rgba(10,10,11,.40),rgba(10,10,11,.78));
+  background:linear-gradient(rgba(6,7,12,.72),rgba(6,7,12,.90));
 }
 
 main{position:relative;z-index:2}

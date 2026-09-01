@@ -51,6 +51,11 @@ def head(title, desc, prefix, og_image):
 <script src="{p}assets/js/bg.js" defer></script>
 </head>
 <body{body_class}>
+<video id="bgv" aria-hidden="true" tabindex="-1" autoplay muted loop playsinline
+       preload="auto" poster="{p}assets/video/smoke-poster.jpg">
+  <source src="{p}assets/video/smoke.webm" type="video/webm">
+  <source src="{p}assets/video/smoke.mp4" type="video/mp4">
+</video>
 <canvas id="bg" aria-hidden="true"></canvas>
 <div id="veil" aria-hidden="true"></div>
 """.format(title=title, desc=desc, p=prefix, site=SITE_URL, og=og_image,
