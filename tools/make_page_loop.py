@@ -3,7 +3,7 @@
 Cut a seamless background loop out of a long clip.
 
     python tools/make_page_loop.py <source.mp4> <name> <start_seconds> [length]
-                                   [--upright] [--gray] [--size=WxH]
+                                   [--upright] [--gray] [--mirror] [--size=WxH]
 
 The loop opens on a crossfade between its own tail and its own head, so the
 repeat has no cut:
@@ -28,11 +28,14 @@ WIDTH, HEIGHT, FPS = 960, 540, 30
 CROSSFADE = 2.0
 ROTATE = True      # upside down; pass --upright to keep it the right way up
 GRAY = False       # pass --gray for monochrome
+MIRROR = False     # pass --mirror to add a horizontal flip on top
 
 
 def chain(src, start, length):
     c = CROSSFADE
-    look = ("hflip,vflip," if ROTATE else "") + ("hue=s=0," if GRAY else "")
+    look = (("hflip,vflip," if ROTATE else "")
+            + ("hflip," if MIRROR else "")
+            + ("hue=s=0," if GRAY else ""))
     return (
         "[0:v]trim=start={s}:duration={total},setpts=PTS-STARTPTS,"
         "fps={fps},scale={w}:{h}:force_original_aspect_ratio=increase,"
@@ -46,13 +49,15 @@ def chain(src, start, length):
 
 
 def main():
-    global ROTATE, GRAY
+    global ROTATE, GRAY, MIRROR
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     flags = {a for a in sys.argv[1:] if a.startswith("--")}
     if "--upright" in flags:
         ROTATE = False
     if "--gray" in flags:
         GRAY = True
+    if "--mirror" in flags:
+        MIRROR = True
     for f in flags:
         if f.startswith("--size="):
             global WIDTH, HEIGHT

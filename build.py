@@ -240,10 +240,10 @@ WORKS = [
    "человеком, но больше не зависящим от него.",
  ],
  "gallery": [
+   ("city-01.webp", "contain", "Act I — Threshold", "Акт I — Порог"),
    ("delta-poster.jpg", "cover",
     "ДЕЛЬТА’n — dome projection competition final, Planetarium No. 1",
-    "ДЕЛЬТА’n — финал конкурса купольных проекций, Планетарий №1", True),
-   ("city-01.webp", "contain", "Act I — Threshold", "Акт I — Порог"),
+    "ДЕЛЬТА’n — финал конкурса купольных проекций, Планетарий №1"),
    ("city-02.webp", "contain", "Act I — Threshold", "Акт I — Порог"),
    ("city-03.webp", "contain", "Act II — Repeat", "Акт II — Повтор"),
    ("city-05.webp", "contain", "Act II — Repeat", "Акт II — Повтор"),
