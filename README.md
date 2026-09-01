@@ -1,4 +1,4 @@
-# nika-sur-ma.github.io
+# sur-ma.site
 
 Портфолио: купольное кино, видеомэппинг, AR, многоканальный звук.
 Статический сайт, двуязычный (RU/EN), без зависимостей и без сборщиков.
@@ -190,11 +190,11 @@ python tools/make_stills_loop.py lantern фото1.jpg фото2.jpg
 
 ## Публикация на GitHub Pages
 
-Репозиторий должен называться `nika-sur-ma.github.io` и лежать в аккаунте
-`nika-sur-ma`.
+Репозиторий должен называться `nikasurma16.github.io` и лежать в аккаунте
+`nikasurma16`.
 
 ```bash
-git remote add origin https://github.com/nika-sur-ma/nika-sur-ma.github.io.git
+git remote add origin https://github.com/nikasurma16/nikasurma16.github.io.git
 git push -u origin main
 ```
 
@@ -219,7 +219,7 @@ branch`, ветка `main`, папка `/ (root)`.
 | AAAA | @ | 2606:50c0:8001::153 |
 | AAAA | @ | 2606:50c0:8002::153 |
 | AAAA | @ | 2606:50c0:8003::153 |
-| CNAME | www | nika-sur-ma.github.io. |
+| CNAME | www | nikasurma16.github.io. |
 
 Затем Settings → Pages → Custom domain → `sur-ma.site` → Save, дождаться
 проверки DNS и включить `Enforce HTTPS` (галочка появляется не сразу —
