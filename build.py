@@ -254,7 +254,7 @@ WORKS = [
  "title_en": "Magic Lantern", "title_ru": "Волшебный фонарь",
  "sub_en": "Night of Light, Gatchina, 2025. Media art and sound design; music and animation.",
  "sub_ru": "«Ночь света», Гатчина, 2025. Медиахудожница и саунд-дизайн; музыка и анимация.",
- "cover": "lantern-festival.jpg", "fit": "cover", "bg": "lantern", "flip": True,
+ "cover": "lantern-festival.jpg", "fit": "cover", "bg": "lantern",
  "meta": [
    ("Year", "Год", "2025", "2025"),
    ("Festival", "Фестиваль",
@@ -512,8 +512,6 @@ CV = [
           "<b>ad(do)Or_e(a)Rror</b> — спец-проект ПС-2025: Все прекрасные аудиовизуальные истории"),
  ("2025", "<b>de[]construction of A(I)</b> — 8-channel audio installation, graduation work (Soundartist.ru), Krasnokholmskaya Gallery, Moscow",
           "<b>de[]construction of A(I)</b> — 8-канальная звуковая инсталляция, диплом (Soundartist.ru), Краснохолмская галерея, Москва"),
- ("2025", "<b>Touch Me {Maybe}</b> — with Lera Juffer, AIR, ITMO",
-          "<b>Touch Me {Maybe}</b> — совместно с Lera Juffer, AIR, ИТМО"),
  ("2025", "<b>LEZ: Acoustic Trace</b> — Laboratory of Experimental Sound, Dom Radio",
           "<b>ЛЭЗ: Акустический след</b> — Лаборатория экспериментального звука, Дом радио"),
  ("2025", "<b>Ivory Tower VII</b> — sound laboratory, Dom Radio",
