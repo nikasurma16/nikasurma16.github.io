@@ -215,6 +215,8 @@ body.deck-page{overflow:hidden}
   max-width:min(50vw,800px);
   max-height:min(70vh,740px);
 }
+/* A video has no intrinsic size to size the paper by, so it is given one. */
+.slide .cut video{width:min(42vw,560px)}
 .kicker{
   font-family:var(--mono);font-size:10px;letter-spacing:.24em;
   text-transform:uppercase;color:var(--dim);
@@ -337,6 +339,7 @@ html.js .portrait:hover .cut.in{
   max-width:min(46vw,720px);
   max-height:min(64vh,680px);
 }
+.hero .cut video{width:min(40vw,520px)}
 .hero h1{
   margin:.5em 0 .34em;font-weight:200;font-size:clamp(28px,5vw,66px);line-height:1.04;
   letter-spacing:.004em;text-transform:uppercase;
@@ -422,7 +425,8 @@ html.js .portrait:hover .cut.in{
 .portrait .cut img{width:100%;filter:grayscale(1) contrast(1.04)}
 
 /* A reel pinned to the page: vertical, silent, and a way through to Instagram. */
-.cut video{display:block;width:100%;height:auto;filter:grayscale(1) contrast(1.06)}
+.cut video{display:block;height:auto;filter:grayscale(1) contrast(1.06)}
+.portrait .cut video{width:100%}
 .reel{cursor:pointer}
 .reel .reel-tag{
   position:absolute;left:50%;transform:translateX(-50%);
@@ -468,6 +472,7 @@ html.js .portrait:hover .cut.in{
   .slide .cap,.hero .cap{flex:0 0 auto;max-width:100%}
   .slide .cut img{max-width:84vw;max-height:40vh}
   .hero .cut img{max-width:84vw;max-height:44vh}
+  .slide .cut video,.hero .cut video{width:min(82vw,420px)}
   .slide::after,.hero::after{
     background:linear-gradient(to top,rgba(6,6,8,.88) 0%,rgba(6,6,8,.5) 46%,rgba(6,6,8,.12) 100%);
   }

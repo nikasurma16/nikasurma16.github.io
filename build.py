@@ -48,17 +48,24 @@ def t(en, ru, tag="span", cls=None):
 TILTS = [-3.4, 2.6, -1.9, 3.9, -2.8, 1.7, -4.2, 2.2, -1.4, 3.1, -2.6, 1.2]
 
 
-def cut(i, src, prefix, fit="cover", eager=False, klass="", flip=False):
-    """One scissor-cut photograph. `flip` hangs it upside down."""
+def cut(i, src, prefix, fit="cover", eager=False, klass="", flip=False, video=None):
+    """One scissor-cut piece. `flip` hangs it upside down; `video` names a
+    loop in assets/video/ to paste on instead of a photograph."""
+    if video:
+        inner = ('<video autoplay muted loop playsinline preload="metadata" '
+                 'aria-hidden="true" poster="{p}assets/video/{v}-poster.jpg">\n'
+                 '{sources}</video>').format(p=prefix, v=video,
+                                             sources=bg_sources(video, prefix))
+    else:
+        inner = ('<img src="{p}assets/img/{src}" alt=""{load} decoding="async">'
+                 ).format(p=prefix, src=src,
+                          load=' fetchpriority="high"' if eager else ' loading="lazy"')
     return ('<div class="cut{k}" data-fit="{fit}" data-shape="{shape}"{flip} '
-            'style="--tilt:{tilt}deg;--d:{delay}ms">'
-            '<img src="{p}assets/img/{src}" alt=""{load} decoding="async">'
-            '</div>').format(
+            'style="--tilt:{tilt}deg;--d:{delay}ms">{inner}</div>').format(
         k=(" " + klass) if klass else "",
         fit=fit, shape=(i % 5) + 1, tilt=TILTS[i % len(TILTS)],
         flip=' data-flip="1"' if flip else "",
-        delay=(i % 6) * 70, p=prefix, src=src,
-        load=' fetchpriority="high"' if eager else ' loading="lazy"')
+        delay=(i % 6) * 70, inner=inner)
 
 
 def bg_sources(bg, prefix):
@@ -399,6 +406,7 @@ WORKS = [
  "sub_en": "Graduation work, Soundartist.ru. Krasnokholmskaya Gallery, Moscow, 22.07 — 07.09.2025.",
  "sub_ru": "Дипломная работа, Soundartist.ru. Краснохолмская галерея, Москва, 22.07 — 07.09.2025.",
  "cover": "deconstruction.jpg", "fit": "cover",
+ "cover_video": "whispers", "flip": True,
  "meta": [
    ("Year", "Год", "2025", "2025"),
    ("Form", "Форма",
@@ -595,7 +603,8 @@ def render_works():
   </section>""".format(
             fit=w["fit"], n=i + 1, slug=w["slug"], title_en=w["title_en"],
             cutout=cut(i, w["cover"], "", w["fit"], eager=(i == 0),
-                       flip=w.get("flip", False)),
+                       flip=w.get("flip", False),
+                       video=w.get("cover_video")),
             kicker=t(w["kicker_en"], w["kicker_ru"]),
             title=t(w["title_en"], w["title_ru"]),
             sub=t(w["sub_en"], w["sub_ru"]),
@@ -690,7 +699,8 @@ def render_work(i, w):
 </html>
 """.format(fit=w["fit"],
            cutout=cut(i, w.get("hero", w["cover"]), "../", w["fit"], eager=True,
-                      flip=w.get("flip", False)),
+                      flip=w.get("flip", False),
+                      video=w.get("cover_video")),
            kicker=t(w["kicker_en"], w["kicker_ru"]),
            title=t(w["title_en"], w["title_ru"]),
            sub=t(w["sub_en"], w["sub_ru"]),
