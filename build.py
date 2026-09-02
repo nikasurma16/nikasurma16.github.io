@@ -310,7 +310,7 @@ WORKS = [
            "Digital Rain Festival, St. Petersburg, 2025.",
  "sub_ru": "Победитель опен-колла на 3D-мэппинг фасада Александринского театра. "
            "Фестиваль медиаискусства D/G/TAL RA/N, Санкт-Петербург, 2025.",
- "cover": "rain-facade.jpg", "fit": "cover", "bg": "rain",
+ "cover": "rain-mapping.jpg", "fit": "cover", "cover_colour": True, "bg": "rain",
  "hero": "rain-festival-poster.jpg",
  "meta": [
    ("Year", "Год", "2025", "2025"),
@@ -693,6 +693,7 @@ def render_works():
             fit=w["fit"], n=i + 1, slug=w["slug"], title_en=w["title_en"],
             cutout=cut(i, w["cover"], "", w["fit"], eager=(i == 0),
                        flip=w.get("flip", False),
+                       colour=w.get("cover_colour", False),
                        video=w.get("cover_video")),
             kicker=t(w["kicker_en"], w["kicker_ru"]),
             title=t(w["title_en"], w["title_ru"]),
