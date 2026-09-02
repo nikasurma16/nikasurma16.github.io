@@ -615,26 +615,25 @@ CV = [
 ]
 
 BIO_EN = [
- "Nika sür-mä is a media artist whose practice investigates agentic systems in media and their "
- "role in transforming human perception and agency. Working with sound, generative systems, AI, "
- "augmented reality, 3D environments, and spatial composition, she creates experimental situations "
- "in which humans interact with autonomous and semi-autonomous processes.",
- "Her work explores the emergence of the posthuman through the redistribution of agency between "
- "humans, machines, algorithms, and environments. Rather than treating technology as a tool, she "
- "approaches media systems as active participants capable of influencing perception, behavior, "
- "and artistic production.",
+ "Nika sür-mä is a media artist investigating agency in media systems and its "
+ "redistribution between the human, the machine, the algorithm and the environment.",
+ "Working with sound, generative systems, AI, augmented reality and 3D environments, "
+ "she creates situations in which technology stops being a tool and becomes a "
+ "participant in the artistic process in its own right.",
+ "Her practice examines how that shift changes human perception, authorship and the "
+ "ability to control what is happening, putting the boundary between a person and a "
+ "system in question.",
 ]
 
 BIO_RU = [
- "Nika sür-mä — медиахудожница, чья практика исследует агентные системы в медиа и их роль "
- "в трансформации человеческого восприятия и агентности. Работая со звуком, генеративными "
- "системами, ИИ, дополненной реальностью, 3D-средами и пространственной композицией, она "
- "создаёт экспериментальные ситуации, в которых человек взаимодействует с автономными "
- "и полуавтономными процессами.",
- "Её работа исследует возникновение постчеловеческого через перераспределение агентности "
- "между людьми, машинами, алгоритмами и средами. Вместо того чтобы относиться к технологии "
- "как к инструменту, она рассматривает медиасистемы как активных участников, способных "
- "влиять на восприятие, поведение и художественное производство.",
+ "Nika sür-mä — медиахудожница, исследующая агентность в медиасистемах и её "
+ "перераспределение между человеком, машиной, алгоритмом и средой.",
+ "Работая со звуком, генеративными системами, ИИ, дополненной реальностью и "
+ "3D-средами, она создаёт ситуации, в которых технология перестаёт быть инструментом "
+ "и становится самостоятельным участником художественного процесса.",
+ "Её практика исследует, как это смещение меняет человеческое восприятие, авторство "
+ "и способность контролировать происходящее, ставя под вопрос границу между человеком "
+ "и системой.",
 ]
 
 
