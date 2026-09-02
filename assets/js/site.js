@@ -67,12 +67,20 @@
     ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) {
       window.addEventListener(ev, nudge, { passive: true });
     });
-    /* A refusal does not always reject; some browsers just never start. */
-    setTimeout(function () {
-      Array.prototype.forEach.call(inlineVideos, function (v) {
-        if (v.isConnected && v.paused) freeze(v);
-      });
-    }, 2500);
+    /* A refusal does not always reject; some browsers simply never start,
+       and until the swap happens the cut-out is an empty sheet of paper.
+       Check early, then once more for a slow connection. */
+    Array.prototype.forEach.call(inlineVideos, function (v) {
+      v.addEventListener('error', function () { freeze(v); }, { once: true });
+      v.addEventListener('stalled', function () { freeze(v); }, { once: true });
+    });
+    [900, 2500].forEach(function (ms) {
+      setTimeout(function () {
+        Array.prototype.forEach.call(inlineVideos, function (v) {
+          if (v.isConnected && v.paused) freeze(v);
+        });
+      }, ms);
+    });
   }
 
   /* ---- paper cutouts ----------------------------------------------- */

@@ -192,12 +192,14 @@ def head(title, desc, prefix, og_image, bg="portrait", grain=0):
 {sources}</video>
 <canvas id="bg" aria-hidden="true"></canvas>
 <div id="veil" aria-hidden="true"></div>
-<a class="bg-watch" href="{p}{bgvideo}" target="_blank" rel="noopener">{watch}</a>
-""".format(title=title, desc=desc, p=prefix, site=SITE_URL, og=og_image, bg=bg,
+{bgwatch}""".format(title=title, desc=desc, p=prefix, site=SITE_URL, og=og_image, bg=bg,
            grain=grain, sources=bg_sources(bg, prefix),
            bgposter=asset("assets/video/%s-poster.jpg" % bg),
-           bgvideo=asset("assets/video/%s.mp4" % bg),
-           watch=t("watch the background", "смотреть фон"),
+           bgwatch=("" if bg == "portrait" else
+                    '<a class="bg-watch" href="%s%s" target="_blank" '
+                    'rel="noopener">%s</a>\n'
+                    % (prefix, asset("assets/video/%s.mp4" % bg),
+                       t("watch the background", "смотреть фон"))),
            gfonts=google_fonts_url(),
            css=asset("assets/css/site.css"), bgjs=asset("assets/js/bg.js"),
            fontcss=('<link rel="stylesheet" href="%s%s">\n'
