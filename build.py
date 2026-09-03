@@ -840,7 +840,7 @@ def render_about():
 <div class="wrap about-top">
   <div class="cols">
     <div class="portrait">
-      <a class="cut reel" data-shape="2" style="--tilt:-2.4deg"
+      <a class="cut reel" data-shape="2" data-colour="1" style="--tilt:-2.4deg"
          href="{instagram}" target="_blank" rel="me noopener">
         <video autoplay muted loop playsinline preload="metadata"
                poster="{reelposter}" aria-label="{alt}">

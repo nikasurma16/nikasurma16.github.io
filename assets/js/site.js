@@ -67,20 +67,20 @@
     ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) {
       window.addEventListener(ev, nudge, { passive: true });
     });
-    /* A refusal does not always reject; some browsers simply never start,
-       and until the swap happens the cut-out is an empty sheet of paper.
-       Check early, then once more for a slow connection. */
+    /* Freeze on an actual refusal, not on a stopwatch: a phone on a slow
+       connection needs seconds to buffer, and swapping it out early meant
+       a video that could have played never did. The late check only fires
+       when nothing has arrived at all. */
     Array.prototype.forEach.call(inlineVideos, function (v) {
       v.addEventListener('error', function () { freeze(v); }, { once: true });
-      v.addEventListener('stalled', function () { freeze(v); }, { once: true });
+      v.addEventListener('canplay', function () { nudge(); }, { once: true });
+      v.addEventListener('loadeddata', function () { nudge(); }, { once: true });
     });
-    [900, 2500].forEach(function (ms) {
-      setTimeout(function () {
-        Array.prototype.forEach.call(inlineVideos, function (v) {
-          if (v.isConnected && v.paused) freeze(v);
-        });
-      }, ms);
-    });
+    setTimeout(function () {
+      Array.prototype.forEach.call(inlineVideos, function (v) {
+        if (v.isConnected && v.paused && v.readyState < 3) freeze(v);
+      });
+    }, 8000);
   }
 
   /* ---- paper cutouts ----------------------------------------------- */
