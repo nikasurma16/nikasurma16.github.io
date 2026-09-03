@@ -544,14 +544,18 @@ html.js .portrait:hover .cut.in{
 }
 
 /* ---- mobile background orientation ---------------------------------- */
-/* The loops are encoded upside down on purpose, but a frozen still of one
-   reads as a mistake rather than as a decision, so on phones it is turned
-   back. Kept at the end of the file: the splash scale rule above matches
-   with the same weight, and only source order separates them. */
+/* The portrait loop is turned back on phones, where it is a frozen still
+   and reads as a mistake rather than as a decision. The work backgrounds
+   are not: each of those is inverted as part of the piece, and a phone
+   also offers the video itself behind "watch the background" — turning
+   the still would leave the two disagreeing. Hence [data-main], which
+   only the portrait carries. Kept at the end of the file: the splash
+   scale rule above matches with the same weight, and only source order
+   separates them. */
 
 @media (max-width:760px),(prefers-reduced-motion:reduce){
-  #bgstill{transform:rotate(180deg)}
-  body.splash-page #bgstill{transform:scale(1.42) rotate(180deg)}
+  #bgstill[data-main]{transform:rotate(180deg)}
+  body.splash-page #bgstill[data-main]{transform:scale(1.42) rotate(180deg)}
 }
 
 /* A full-width cut-out is tilted past the edge of the screen and clipped,

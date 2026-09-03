@@ -186,7 +186,7 @@ def head(title, desc, prefix, og_image, bg="portrait", grain=0):
 <script src="{p}{bgjs}" defer></script>
 </head>
 <body{body_class}>
-<div id="bgstill" aria-hidden="true" style="background-image:url({p}{bgposter})"></div>
+<div id="bgstill"{mainbg} aria-hidden="true" style="background-image:url({p}{bgposter})"></div>
 <video id="bgv" aria-hidden="true" tabindex="-1" autoplay muted loop playsinline
        preload="auto" data-grain="{grain}" poster="{p}{bgposter}">
 {sources}</video>
@@ -195,6 +195,7 @@ def head(title, desc, prefix, og_image, bg="portrait", grain=0):
 {bgwatch}""".format(title=title, desc=desc, p=prefix, site=SITE_URL, og=og_image, bg=bg,
            grain=grain, sources=bg_sources(bg, prefix),
            bgposter=asset("assets/video/%s-poster.jpg" % bg),
+           mainbg=(' data-main="1"' if bg == "portrait" else ""),
            bgwatch=("" if bg == "portrait" else
                     '<a class="bg-watch" href="%s%s" target="_blank" '
                     'rel="noopener">%s</a>\n'
