@@ -44,7 +44,11 @@
      actually refuses — a phone plays these fine until Low Power Mode, and
      iOS answers a refusal by laying its own transport controls over the
      page, which is what has to be avoided. */
+  /* The reel has its own play control, so it is never frozen to a still. */
+  function isReel(v) { return !!(v.closest && v.closest('.reel')); }
+
   function freeze(v) {
+    if (isReel(v)) return;
     var poster = v.getAttribute('poster');
     if (!poster || !v.parentNode) return;
     var img = document.createElement('img');
@@ -60,6 +64,34 @@
       var p = v.play();
       if (p && p.catch) p.catch(function () { freeze(v); });
     });
+  }
+
+  /* Tap to play where autoplay was refused. A user gesture is allowed even
+     in Low Power Mode, which blocks autoplay on iOS outright. */
+  var reel = document.querySelector('.reel');
+  var reelVideo = reel && reel.querySelector('video');
+  if (reelVideo) {
+    var markReel = function () {
+      reel.classList.toggle('is-paused', reelVideo.paused);
+    };
+    var toggleReel = function (e) {
+      e.preventDefault();
+      if (reelVideo.paused) {
+        var p = reelVideo.play();
+        if (p && p.catch) p.catch(function () { /* still refused */ });
+      } else {
+        reelVideo.pause();
+      }
+    };
+    reelVideo.addEventListener('click', toggleReel);
+    var playBtn = reel.querySelector('.reel-play');
+    if (playBtn) playBtn.addEventListener('click', toggleReel);
+    ['play', 'pause', 'loadeddata', 'canplay', 'error'].forEach(function (ev) {
+      reelVideo.addEventListener(ev, markReel);
+    });
+    markReel();
+    setTimeout(markReel, 1200);
+    setTimeout(markReel, 4000);
   }
 
   if (inlineVideos.length) {

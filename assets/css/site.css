@@ -466,6 +466,28 @@ html.js .portrait:hover .cut.in{
 .cut video{display:block;height:auto;filter:grayscale(1) contrast(1.06)}
 .portrait .cut video{width:100%}
 .reel{cursor:pointer}
+.reel video{cursor:pointer}
+
+/* A tap always earns the right to play, even where autoplay is refused —
+   Low Power Mode on iOS blocks it outright. The button appears only while
+   the reel is standing still. */
+.reel-play{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:58px;height:58px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.7);
+  background:rgba(10,10,12,.42);
+  backdrop-filter:blur(2px);
+  cursor:pointer;display:none;padding:0;
+  transition:background .25s,border-color .25s;
+}
+.reel-play::before{
+  content:"";position:absolute;left:53%;top:50%;
+  transform:translate(-50%,-50%);
+  border-style:solid;border-width:9px 0 9px 15px;
+  border-color:transparent transparent transparent #fff;
+}
+.reel-play:hover{background:rgba(10,10,12,.7);border-color:#fff}
+.reel.is-paused .reel-play{display:block}
 .reel .reel-tag{
   position:absolute;left:50%;transform:translateX(-50%);
   bottom:calc(clamp(6px,.85vw,15px) + 12px);
@@ -530,6 +552,12 @@ html.js .portrait:hover .cut.in{
 @media (max-width:760px),(prefers-reduced-motion:reduce){
   #bgstill{transform:rotate(180deg)}
   body.splash-page #bgstill{transform:scale(1.42) rotate(180deg)}
+}
+
+/* A full-width cut-out is tilted past the edge of the screen and clipped,
+   so on phones the reel is pulled in and centred. */
+@media (max-width:760px){
+  .portrait .cut{max-width:84vw;margin:0 auto}
 }
 
 /* ---- colour exceptions ---------------------------------------------- */
